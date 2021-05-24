@@ -70,6 +70,11 @@ export default {
     state.allLetters = allLetters;
   },
 
+  // mail-board
+  getBoardModalStatus(state, openBoardModal) {
+    state.openBoardModal = openBoardModal;
+  },
+
   // 프로필
   setModalProfile(state, modalProfileSetting) {
     state.modalProfileSetting = modalProfileSetting;
