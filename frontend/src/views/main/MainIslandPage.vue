@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="question__btn">
+    <div class="question__btn" @click="moveToAbout">
       <img src="../../assets/image/questionbtn.png" alt="" />
     </div>
   </div>
@@ -101,6 +101,9 @@ export default {
     Toggle,
   },
   methods: {
+    moveToAbout() {
+      this.$router.push({ name: 'About' });
+    },
     dayoff() {
       this.$emit('dayoff');
     },
