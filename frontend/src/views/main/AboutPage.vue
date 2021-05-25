@@ -33,6 +33,13 @@
               <p class="aboutporest_info3">
                 우편을 통해 당신의 고민을 나눕니다.
               </p>
+              <p class="land__info">
+                <img src="../../assets/image/main1.png" alt="" />
+                <img src="../../assets/image/main2.png" alt="" />
+                <img src="../../assets/image/main3.png" alt="" />
+                <img src="../../assets/image/main4.png" alt="" />
+                <img src="../../assets/image/main5.png" alt="" />
+              </p>
               <p class="aboutporest_info3_1">
                 지치고 힘든 사람들을 위한 소통의 공간
                 <br />마음을 터놓을 수 있는 따뜻한 공간
@@ -98,6 +105,7 @@
                 빠른 시일내에 답변드리겠습니다.
               </div>
               <img src="@/assets/image/qrcode2.jpg" alt="" />
+              <img class="gurumi" src="../../assets/image/gurumi.png" alt="" />
             </div>
           </li>
         </ul>
@@ -125,20 +133,20 @@ export default {
     moveToBack() {
       this.$router.go(-1);
     },
-    sendDM() {
-      http
-        .post('/message/sendMessage', {
-          message_senderId: this.message_senderId,
-          message_title: this.message_title,
-          message_receiverId: this.message_receiverId,
-          message_content: this.message_content,
-        })
-        .then(() => {
-          alert('전송 완료');
-          this.message_title = '';
-          this.message_content = '';
-        });
-    },
+    // sendDM() {
+    //   http
+    //     .post('/message/sendMessage', {
+    //       message_senderId: this.message_senderId,
+    //       message_title: this.message_title,
+    //       message_receiverId: this.message_receiverId,
+    //       message_content: this.message_content,
+    //     })
+    //     .then(() => {
+    //       alert('전송 완료');
+    //       this.message_title = '';
+    //       this.message_content = '';
+    //     });
+    // },
   },
 };
 </script>
