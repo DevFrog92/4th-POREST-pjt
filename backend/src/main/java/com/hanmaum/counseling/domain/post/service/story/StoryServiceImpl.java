@@ -66,6 +66,7 @@ public class StoryServiceImpl implements StoryService{
     private UserStoryStateDto mappingToUserStoryStateDto(Story story){
         int cnt = 0;
         for(Counsel counsel : story.getCounsels()){
+            if(counsel.getStatus() != CounselStatus.CONNECT) continue;
             int len = counsel.getLetters().size();
             Letter lastLetter = counsel.getLetters().get(len-1);
 
