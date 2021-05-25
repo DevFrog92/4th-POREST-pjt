@@ -525,3 +525,32 @@
 .logo img {
   width: 10vw;
 }
+
+
+.question__btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  z-index: 90;
+  transform: perspective(800px) rotateZ(0);
+  transition: all 1s;
+}
+
+.question__btn img {
+  width: 100%;
+  height: 100%;
+}
+
+.question__btn:hover {
+  animation: rotate 1s ;
+}
+
+@keyframes rotate{
+  100%{
+    transform: perspective(800px) rotateZ(360deg);
+
+  }
+}

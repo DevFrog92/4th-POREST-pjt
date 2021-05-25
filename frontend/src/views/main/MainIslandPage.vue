@@ -70,6 +70,9 @@
         </div>
       </div>
     </div>
+    <div class="question__btn">
+      <img src="../../assets/image/questionbtn.png" alt="" />
+    </div>
   </div>
 </template>
 
