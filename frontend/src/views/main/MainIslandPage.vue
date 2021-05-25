@@ -1,5 +1,6 @@
 <template>
   <div class="mainisland">
+    <toggle @dayoff="dayoff" class="toggle__wrapper__main"></toggle>
     <div class="short-profile">
       <profile-for-main></profile-for-main>
     </div>
@@ -74,6 +75,7 @@
 
 <script>
 import Star from '@/components/common/Star.vue';
+import Toggle from '@/components/common/Toggle.vue';
 import ProfileForMain from '@/components/main/ProfileForMain.vue';
 export default {
   data() {
@@ -93,8 +95,12 @@ export default {
   components: {
     Star,
     ProfileForMain,
+    Toggle,
   },
   methods: {
+    dayoff() {
+      this.$emit('dayoff');
+    },
     goToJoy() {
       this.$router.push({ name: 'JoyMainPage' });
     },
@@ -129,8 +135,17 @@ export default {
       alert('로그인이 필요합니다.');
       this.$router.push({ name: 'Login' });
     }
+    this.$emit('lowvolumn');
   },
 };
 </script>
 
 <style scoped src="@/assets/css/main/MainIslandPage.css"></style>
+<style scoped>
+.toggle__wrapper__main {
+  position: absolute;
+  z-index: 100;
+  top: 1rem;
+  left: 1rem;
+}
+</style>
