@@ -575,7 +575,7 @@
 
 @keyframes animStar {
   from {
-      transform: translateY(500px);
+      transform: translateY(000px);
   }
   to {
       transform: translateY(-2000px);

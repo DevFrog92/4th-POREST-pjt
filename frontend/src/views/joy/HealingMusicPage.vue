@@ -136,12 +136,13 @@ export default {
       this.$router.go(-1);
     },
     pauseAudio(){
-
+      this.$emit("controlMusic","play");
       let audio = document.querySelector('#audio');
       audio.pause();
       this.playAudio = false;
     },
     startAudio(e){
+      this.$emit("stopBgm");
       let mainWrapper = document.querySelector('.healing__music__wrapper');
       let audio = document.querySelector('#audio');
       let source = document.querySelector('#audioSource');

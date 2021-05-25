@@ -53,6 +53,15 @@
 
 <script>
 export default {
+
+  mounted() {
+    const menu1 = document.querySelector('.postmenu1');
+    const menu2 = document.querySelector('.postmenu2');
+    const menu3 = document.querySelector('.postmenu3');
+    menu1.addEventListener('mouseenter',()=>{
+      this.$emit
+    })
+  },
   methods: {
     moveToBack() {
       this.$router.push({ name: 'MainIsland' });

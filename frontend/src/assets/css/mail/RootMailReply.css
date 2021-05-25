@@ -27,14 +27,20 @@
   0% {
     transform: rotateX(0deg);
     z-index: 5;
+    opacity: 1;
+
   }
   50% {
     transform: rotateX(0deg);
     z-index: 5;
+    opacity: 1;
+
   }
   100% {
     transform: rotateX(-180deg);
     z-index: -1;
+    opacity: 0;
+
   }
 }
 @keyframes letter-out {
@@ -117,6 +123,8 @@
   perspective: 800px;
   overflow: hidden;
   background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  cursor: url('../../image/pointer_2.png'), pointer; 
+
 }
 
 

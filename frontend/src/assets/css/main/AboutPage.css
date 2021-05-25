@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+.about {
+  width: 100vw;
+  height: 100vh;
+  /* font-size: 100%; */
+  /*  text-align: center;*/
+  /* display: flex; */
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+  background-image: url('../../image/sky.jpg');
+
+}
+.back {
+  position: absolute;
+  display: inline-block;
+  z-index: 30;
+}
+
+.back i {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #fff;
+}
+.about_grid {
+  position: relative;
+  margin-top: 5.4rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+
+.about_left_size {
+  margin-left: 8.5rem;
+  width: 14%;
+  height: 19rem;
+  display: block;
+  overflow: hidden;
+  font-family: 'InfinitySans-BoldA1';
+  border-radius: 1rem;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+}
+
+.about_right_size {
+  width: 80%;
+  display: block;
+  padding: 0rem 0 0 2rem;
+  overflow: hidden;
+}
+
+
+
+.about .menu div {
+  padding: 1rem 0 1rem 0rem;
+  /* margin-left: 30%; */
+  color: white;
+  width:80%;
+  cursor: pointer;
+  position: relative;
+  font-weight: 600;
+  margin-top:1rem;
+  font-size: 21px;
+  border-radius: 1.1rem;
+  text-align: center;
+  /* box-shadow: 1px 5px 45px rgba(0, 0, 0, 0.1); */
+  transition: all .5s;
+  margin-left: 1.5rem;
+}
+
+.about .menu div:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+
+.about .menu div.active span {
+  pointer-events: none;
+}
+
+.about .menu div span {
+  pointer-events: none;
+}
+
+.about .menu div.active {
+    color: black;
+}
+
+.about_content {
+  width: 90%;
+  height: 83%;
+  position: relative;
+  /* height: 0px; */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.about_content li {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(50px);
+  top: 0;
+  left: 0;
+  position: absolute;
+  list-style: none;
+  transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
+  overflow: hidden;
+  
+  border-radius: 1rem;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 1px 2px 10px rgba(255, 255, 255, 0.3); */
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+
+}
+
+.about_content li.active {
+  /* width: 100vh; */
+  transition-delay: .3s;
+  z-index: 2;
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.aboutporest {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+
+.aboutporest_info1_1 {
+    margin: 5rem 0 0.5rem 0;
+  font-size: 5.7rem;
+  letter-spacing: 0.5px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.aboutporest_info2 {
+  font-size: 1.9rem;
+  letter-spacing: 1px;
+font-weight: bold;
+  font-family: 'Love_son';
+
+}
+
+.aboutporest_info3 {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  margin-top: 1.6rem;
+  font-weight: bold;
+  /* font-style: italic; */
+  font-family: 'GyeonggiBatang';
+  
+
+}
+
+.aboutporest_info3_1 {
+  font-size: 1.65rem;
+  letter-spacing: 1px;
+  margin-top: 8rem;
+  line-height: 3.5rem;
+  font-weight: bold;
+  /*  font-style: italic;*/
+  margin-bottom: 2px;
+  font-family: 'GyeonggiBatang';
+  
+}
+.aboutporest_info3_2 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  margin-top: 8rem;
+  line-height: 3rem;
+  font-weight: bold;
+  /*  font-style: italic;*/
+  margin-bottom: 2px;
+  font-family: 'Love_son';
+}
+
+.aboutteam {
+  position: absolute;
+  width: 100%;
+  font-family: 'Do Hyeon', sans-serif;
+  text-align: center;
+}
+
+
+.aboutteam_info1 {
+  margin:6rem 0 4.5rem 0 ;
+  font-size: 3.2rem;
+  letter-spacing: 1px;
+  line-height: 26px;
+  font-weight: bold;
+font-family: 'Do Hyeon', sans-serif;
+}
+
+.aboutteam_leader {
+  width: 100%;
+  position: relative;
+}
+
+.aboutteam_image {
+position:absolute;
+  width: 72%;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.aboutteam_image img {
+  width: 100%;
+}
+
+.aboutteam_info {
+position:absolute;
+  width: 100%;
+  top: 50%;
+left: 50%;
+transform: translate(-50%, 155%);
+  text-align: center;
+}
+
+.aboutteam_info .info1 {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-family: 'Love_son';
+margin: 0.5rem 0 1.5rem 0 ;
+}
+.aboutteam_info .info2 {
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-family: 'Love_son';
+  line-height: 2.5rem;
+  margin: 4rem 0 0 0;
+
+
+}
+
+
+
+
+
+
+.aboutsupport {
+  width: 100%;
+  /*  font-size: 20px;*/
+  letter-spacing: 0.8px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.support_info_1 {
+  font-size: 22px;
+  font-weight: bold;
+  color: black;
+  margin: 8rem 0 1rem 0;
+  font-family: 'GyeonggiBatang';
+ 
+}
+
+
+.support_info_2 {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-family: 'GyeonggiBatang';
+}
+
+.support_info_3 {
+  font-size: 1.2rem;
+  margin: 4rem 0 0.5rem 0;
+  font-weight: bold;
+  font-family: 'GyeonggiBatang';
+}
+
+.support_info_4 {
+  font-size: 1.1rem;
+  font-family: 'GyeonggiBatang';
+}
+
+.support_info_5 {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: red;
+  font-family: 'GyeonggiBatang';
+}
+
+
+
+/*contact-------------------------------------*/
+
+.aboutcontact {
+
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'GyeonggiBatang';
+  text-align: center;
+  font-weight: bold;
+  color: red;
+
+}
+
+.contactinfo_title{
+    font-size: 1.4rem;
+    margin: 9rem 0 4rem 0;
+}
+.aboutcontact img{
+    width: 20%;
+}
