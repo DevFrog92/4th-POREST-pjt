@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 public class SimpleStoryDto {
 
     private Long storyId;
-
+    private String writerNickname;
     private FormDto detail;
 
     public SimpleStoryDto(){}
 
     @Builder
-    public SimpleStoryDto(Long storyId, String title, String content, LocalDateTime date){
+    public SimpleStoryDto(Long storyId, String writerNickname, String title, String content, LocalDateTime date){
         this.storyId = storyId;
         this.detail = FormDto.builder().title(title).content(content).createAt(date).build();
     }

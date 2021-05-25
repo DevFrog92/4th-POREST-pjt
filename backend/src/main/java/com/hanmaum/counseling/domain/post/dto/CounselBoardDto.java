@@ -1,25 +1,24 @@
 package com.hanmaum.counseling.domain.post.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
-@ToString
-public class DetailCounselDto {
+public class CounselBoardDto {
     private Long counselId;
     private String writerNickname;
     private String counsellorNickname;
-    private List<LetterReplyDto> detail;
+    private String title;
+    private String content;
 
-    public DetailCounselDto(Long counselId,String writerNickname, String counsellorNickname){
-        detail = new ArrayList<>();
+    @Builder
+    public CounselBoardDto(Long counselId, String writerNickname, String counsellorNickname, String title, String content) {
         this.counselId = counselId;
         this.writerNickname = writerNickname;
         this.counsellorNickname = counsellorNickname;
+        this.title = title;
+        this.content = content;
     }
 }

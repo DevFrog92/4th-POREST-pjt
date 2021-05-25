@@ -4,6 +4,7 @@ import com.hanmaum.counseling.domain.post.dto.FormDto;
 import com.hanmaum.counseling.domain.post.service.LetterService;
 import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.security.CustomUserDetails;
+import com.hanmaum.counseling.utils.AuthUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class LetterController {
                                               @PathVariable("counselId") Long counselId,
                                               @PathVariable("letterId") Long letterId,
                                               Authentication auth) {
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        Long userId = AuthUtil.getIdFromAuthentication(auth);
         letterService.writeLetter(form, counselId, letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
@@ -40,7 +41,7 @@ public class LetterController {
     public ResponseEntity<String> readLetter(@PathVariable("counselId") Long counselId,
                                              @PathVariable("letterId") Long letterId,
                                              Authentication auth) {
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        Long userId = AuthUtil.getIdFromAuthentication(auth);
         letterService.readLetter(letterId, userId);
         return ResponseEntity.ok("Read Letter");
     }

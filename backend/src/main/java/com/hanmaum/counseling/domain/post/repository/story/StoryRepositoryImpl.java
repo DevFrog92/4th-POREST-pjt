@@ -61,7 +61,7 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
 
         return queryFactory
                 .select(Projections.constructor(SimpleStoryDto.class,
-                        story.id, story.form.title, story.form.content, story.createdAt))
+                        story.id, story.writerNickName, story.form.title, story.form.content, story.createdAt))
                 .from(story)
                 .where(story.id.in(randomSet))
                 .fetch();
