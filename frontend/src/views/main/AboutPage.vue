@@ -40,6 +40,28 @@
               <p class="aboutporest_info3_2">
                 porest에 오신 여러분 환영합니다.
               </p>
+              <div class="land__info">
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main1.png" alt="" />
+                  <div>우체통 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main4.png" alt="" />
+                  <div>하루일기 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main2.png" alt="" />
+                  <div>마음나눔 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main5.png" alt="" />
+                  <div>쉼터 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main3.png" alt="" />
+                  <div>하소연 섬</div>
+                </div>
+              </div>
             </div>
           </li>
 
@@ -125,20 +147,20 @@ export default {
     moveToBack() {
       this.$router.go(-1);
     },
-    sendDM() {
-      http
-        .post('/message/sendMessage', {
-          message_senderId: this.message_senderId,
-          message_title: this.message_title,
-          message_receiverId: this.message_receiverId,
-          message_content: this.message_content,
-        })
-        .then(() => {
-          alert('전송 완료');
-          this.message_title = '';
-          this.message_content = '';
-        });
-    },
+    // sendDM() {
+    //   http
+    //     .post('/message/sendMessage', {
+    //       message_senderId: this.message_senderId,
+    //       message_title: this.message_title,
+    //       message_receiverId: this.message_receiverId,
+    //       message_content: this.message_content,
+    //     })
+    //     .then(() => {
+    //       alert('전송 완료');
+    //       this.message_title = '';
+    //       this.message_content = '';
+    //     });
+    // },
   },
 };
 </script>

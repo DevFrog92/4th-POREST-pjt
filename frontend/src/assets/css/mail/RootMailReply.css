@@ -192,6 +192,11 @@
   background-size: 20px 20px;
   background-position: -10px -10px;
 }
+
+.stamp img {
+  width: 3rem;
+  height: 3rem;
+}
 .envelope .front .stamp:after {
   content: "";
   display: block;

@@ -1,9 +1,11 @@
 package com.hanmaum.counseling.global;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import com.hanmaum.counseling.error.ErrorResponse;
 import exception.BannedUserException;
 import exception.UserNotFoundException;
 import exception.WrongPasswordException;
+import io.swagger.models.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +67,13 @@ public class GlobalExceptionController {
         return ResponseEntity.badRequest().body(ErrorResponse.builder()
                 .message(e.getMessage())
                 .code(e.toString())
+                .build());
+    }
+    @ExceptionHandler(value = FirebaseAuthException.class)
+    public ResponseEntity<?> firebaseAuthException(FirebaseAuthException e){
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                .code(e.toString())
+                .message("firebase auth error")
                 .build());
     }
 

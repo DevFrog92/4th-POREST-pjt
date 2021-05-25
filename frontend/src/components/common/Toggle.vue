@@ -23,6 +23,8 @@ export default {
     let hour = now.getHours();
     if (hour >= 7 && hour <= 19) {
       checkBox.click();
+    } else {
+      checkBox.click();
     }
   },
 };

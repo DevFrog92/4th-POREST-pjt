@@ -1,4 +1,4 @@
-import { instance } from "@/api";
+import { instance, instanceAuth } from "@/api";
 
 const signupUser = (userData) =>
   instance
@@ -38,7 +38,7 @@ const findPassword = (userData) =>
       return { status: true, message: "이메일을 확인해주세요" };
     })
     .catch((error) => {
-      return { status: false, message: err.response.data.message };
+      return { status: false, message: error.response.data.message };
     });
 
 //인증 코드 이메일 전송
@@ -61,4 +61,15 @@ const verifyCheck = (userData) =>
     .catch((error) => {
       return { status: false, message: error.response.data.message };
     });
-export { signupUser, loginUser, emailCheck, findPassword, emailVerify, verifyCheck };
+
+const verificationTemperature = (userData) =>
+  instanceAuth
+    .get(`/temperature`, { params: { temp: userData.temperature } })
+    .then((res) => {
+      return { status: true, message: "", data: res.data };
+    })
+    .catch((error) => {
+      return { status: false, message: error.response.data.message };
+    });
+
+export { signupUser, loginUser, emailCheck, findPassword, emailVerify, verifyCheck, verificationTemperature };

@@ -1,5 +1,8 @@
 package com.hanmaum.counseling.domain.account.service;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
@@ -26,7 +29,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -87,7 +89,7 @@ public class AccountService {
         return JwtTokenDto.builder().token(token).build();
     }
 
-    public void updatePassword(HttpServletRequest request, UpdatePasswordDto updatePasswordDto) throws WrongPasswordException, UserNotFoundException {
+    public void updatePassword(HttpServletRequest request, UpdatePasswordDto updatePasswordDto) throws WrongPasswordException, UserNotFoundException, FirebaseAuthException {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtProvider.getEmailFromToken(token);
         User user = findByEmail(email);
@@ -101,6 +103,11 @@ public class AccountService {
         String newPassword = passwordEncoder.encode(updatePasswordDto.getNewPassword());
         user.setPassword(newPassword);
         userRepository.save(user);
+
+        FirebaseAuth.getInstance()
+                .getUserByEmail(email)
+                .updateRequest()
+                .setPassword(updatePasswordDto.getNewPassword());
     }
 
 
@@ -138,14 +145,17 @@ public class AccountService {
         emailUtil.sendMail(email, "POREST 인증 메일 입니다." ,code);
     }
 
-    public void deleteUser(HttpServletRequest request) throws UserNotFoundException {
+    public void deleteUser(HttpServletRequest request) throws UserNotFoundException, FirebaseAuthException {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtProvider.getEmailFromToken(token);
         User user = findByEmail(email);
         userRepository.delete(user);
+        UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
+        FirebaseAuth.getInstance().deleteUser(userRecord.getUid());
+
     }
 
-    public ResponseEntity<?> findPassword(String email, String nickname) throws MessagingException {
+    public ResponseEntity<?> findPassword(String email, String nickname) throws MessagingException, FirebaseAuthException {
         boolean isExist =  userRepository.existsByEmailAndNickname(email, nickname);
         Map<String, Object> result = new HashMap<>();
         if(isExist){
@@ -153,9 +163,13 @@ public class AccountService {
             User user = userRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
             String temporaryPassword = RandomStringUtils.randomAlphabetic(8);
             user.setPassword(passwordEncoder.encode(temporaryPassword));
-            userRepository.save(user);
 
             emailUtil.sendMail(email,"POREST의 임시 비밀번호 메일입니다.", temporaryPassword);
+            userRepository.save(user);
+            FirebaseAuth.getInstance()
+                    .getUserByEmail(email)
+                    .updateRequest()
+                    .setPassword(temporaryPassword);
         }
         else{
             result.put("message","입력하신 정보가 올바르지 않습니다.");
