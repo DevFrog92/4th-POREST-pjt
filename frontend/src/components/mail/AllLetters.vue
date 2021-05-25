@@ -64,6 +64,7 @@ export default {
   },
   mounted() {
     init();
+    console.log(this.pages);
   },
   methods: {
     exitAll() {
