@@ -24,6 +24,7 @@
     <div class="sticker-container">
       <select-stickers></select-stickers>
     </div>
+
     <p class="title">오늘의 일기</p>
     <div class="diary-square">
       <div class="writing-container">
@@ -38,6 +39,11 @@
         :deleteDiary="deleteDiary"
       ></slot>
     </p>
+    <div class="attribute_flatticon">
+      Icons made by
+      <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+      <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+    </div>
   </div>
 </template>
 
@@ -347,5 +353,20 @@ export default {
   float: right;
   margin-top: 2vh;
   cursor: pointer;
+}
+.attribute_flatticon {
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1px;
+}
+
+.attribute_flatticon a {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+.attribute_flatticon a:visited {
+  color: rgba(0, 0, 0, 0.5);
 }
 </style>

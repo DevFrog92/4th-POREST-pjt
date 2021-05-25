@@ -5,7 +5,9 @@
     </span>
     <div class="envelope open">
       <div class="front">
-        <div class="stamp"></div>
+        <div class="stamp">
+          <img src="../../assets/image/sticker/10.png" alt="" />
+        </div>
         <div class="mailme">
           <p>당신의 고민을 담은 편지</p>
           <p>porest가 전해드립니다</p>
@@ -85,7 +87,7 @@ export default {
       await writeStory(this.story);
       setTimeout(() => {
         this.$router.push({ name: 'Mailbox' });
-      }, 3500);
+      }, 5500);
     },
     moveToBack() {
       this.$router.go(-1);
