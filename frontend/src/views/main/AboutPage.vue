@@ -33,13 +33,6 @@
               <p class="aboutporest_info3">
                 우편을 통해 당신의 고민을 나눕니다.
               </p>
-              <p class="land__info">
-                <img src="../../assets/image/main1.png" alt="" />
-                <img src="../../assets/image/main2.png" alt="" />
-                <img src="../../assets/image/main3.png" alt="" />
-                <img src="../../assets/image/main4.png" alt="" />
-                <img src="../../assets/image/main5.png" alt="" />
-              </p>
               <p class="aboutporest_info3_1">
                 지치고 힘든 사람들을 위한 소통의 공간
                 <br />마음을 터놓을 수 있는 따뜻한 공간
@@ -47,6 +40,28 @@
               <p class="aboutporest_info3_2">
                 porest에 오신 여러분 환영합니다.
               </p>
+              <div class="land__info">
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main1.png" alt="" />
+                  <div>우체통 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main4.png" alt="" />
+                  <div>하루일기 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main2.png" alt="" />
+                  <div>마음나눔 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main5.png" alt="" />
+                  <div>쉼터 섬</div>
+                </div>
+                <div class="land__wrapper">
+                  <img src="../../assets/image/main3.png" alt="" />
+                  <div>하소연 섬</div>
+                </div>
+              </div>
             </div>
           </li>
 
@@ -105,7 +120,6 @@
                 빠른 시일내에 답변드리겠습니다.
               </div>
               <img src="@/assets/image/qrcode2.jpg" alt="" />
-              <img class="gurumi" src="../../assets/image/gurumi.png" alt="" />
             </div>
           </li>
         </ul>

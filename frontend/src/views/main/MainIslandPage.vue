@@ -71,7 +71,7 @@
       </div>
     </div>
     <div class="question__btn" @click="moveToAbout">
-      <img src="../../assets/image/questionbtn.png" alt="" />
+      <img src="../../assets/image/exclamation-mark.png" alt="" />
     </div>
   </div>
 </template>
