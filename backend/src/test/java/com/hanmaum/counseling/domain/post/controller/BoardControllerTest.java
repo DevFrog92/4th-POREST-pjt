@@ -1,23 +1,28 @@
 package com.hanmaum.counseling.domain.post.controller;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanmaum.counseling.commons.ControllerTestConfig;
 import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.domain.account.service.AccountService;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionSimpleDto;
 import com.hanmaum.counseling.domain.post.dto.*;
 import com.hanmaum.counseling.domain.post.service.LetterService;
+import com.hanmaum.counseling.domain.post.service.board.CounselBoardService;
 import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,12 +31,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -39,9 +44,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @ActiveProfiles("test")
 @Import(ControllerTestConfig.class)
-class CounselControllerTest {
+class BoardControllerTest {
     @Autowired
     MockMvc mockMvc;
+    @Autowired
+    ObjectMapper mapper;
     @Autowired
     StoryService storyService;
     @Autowired
@@ -53,14 +60,12 @@ class CounselControllerTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    CounselBoardService counselBoardService;
+    @Autowired
     PasswordEncoder encoder;
-    @Autowired
-    ObjectMapper mapper;
-    @Autowired
-    EntityManager em;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         User user = User.builder()
                 .nickname("a")
                 .email("user@test.com")
@@ -82,7 +87,6 @@ class CounselControllerTest {
                 .role(RoleType.ROLE_USER)
                 .password(encoder.encode("1234"))
                 .build();
-
         userRepository.save(user);
         userRepository.save(counsellor);
         userRepository.save(counsellor2);
@@ -102,7 +106,8 @@ class CounselControllerTest {
         letterService.readLetter(letterId1, user.getId());
         Long replyId1 = letterService.writeLetter(new FormDto("사연자의 답변입니다", "네 정말 고맙습니다.", null),
                 tempDto.getCounselId(), letterId1, user.getId());
-
+        EvaluateDto evaluateDto = new EvaluateDto(true, EvaluateDto.EvaluateType.GOOD);
+        counselService.finishCounsel(evaluateDto, tempDto.getCounselId(), user.getId());
 
         //두번째 상담사가 첫번째 사연을 선택
         SimpleCounselDto tempDto2 = storyService.pickStory(storyId, counsellor2.getId());
@@ -111,120 +116,61 @@ class CounselControllerTest {
         //답장
         Long letterId2 = letterService.writeLetter(new FormDto("두번째 상담사의 답변입니다", "그러시군요 ㅋㅋ", null),
                 tempDto2.getCounselId(), tempDto2.getDetail().getLetterId(), counsellor2.getId());
+        counselService.finishCounsel(evaluateDto, tempDto2.getCounselId(), user.getId());
     }
 
     @Test
-    @DisplayName("유저가 작성한 사연의 답장 상태 제공, 200 반환")
-    void get_user_reply_status_success() throws Exception{
+    @DisplayName("공개된 사연 가져오기 페이지 0 성공 200")
+    void get_counsel_page0_success() throws Exception{
         //given
         User user = accountService.findByEmail("user@test.com");
         //when
-        ResultActions actions = mockMvc.perform(get("/stories")
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
-        //then
-        MvcResult mvcResult = actions.andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-
-        String content = mvcResult.getResponse().getContentAsString();
-        List<UserStoryStateDto> result = mapper.readValue(content, mapper.getTypeFactory().constructCollectionType(List.class, UserStoryStateDto.class));
-        Assertions.assertThat(result).extracting("numOfNewReply").containsExactly(1, 0);
-    }
-    
-    @Test
-    @DisplayName("유저가 작성한 사연 하나의 답장 내역, 200 반환")
-    void get_counsels_success() throws Exception{
-        //given
-        User user = accountService.findByEmail("user@test.com");
-        List<UserStoryStateDto> userStoryState = storyService.getUserStoryState(user.getId());
-        Long storyId = userStoryState.get(0).getStoryId();
-        //when
-        ResultActions actions = mockMvc.perform(get("/stories/" + storyId + "/counsels")
+        ResultActions actions = mockMvc.perform(get("/counsel-boards?page=0&size=1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
 
         //then
-        MvcResult mvcResult = actions.andExpect(status().isOk())
+        MvcResult mvcResult = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isNotEmpty())
                 .andDo(print())
                 .andReturn();
-
-        String content = mvcResult.getResponse().getContentAsString();
-        List<UserCounselStateDto> result = mapper.readValue(content, mapper.getTypeFactory().constructCollectionType(List.class, UserCounselStateDto.class));
-
-        Assertions.assertThat(result).extracting("numOfReplies").containsExactly(0, 1);
     }
+
     @Test
-    @DisplayName("자신이 보낸 특정 사연의 상담 내역, 200 반환")
+    @DisplayName("공개된 사연 가져오기 페이지 1 성공 200")
+    void get_counsel_page1_success() throws Exception{
+        //given
+        User user = accountService.findByEmail("user@test.com");
+        //when
+        ResultActions actions = mockMvc.perform(get("/counsel-boards?page=1&size=1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
+
+        //then
+        MvcResult mvcResult = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isNotEmpty())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    @DisplayName("상담 상세 내역 반환 성공")
     void get_detail_counsel_success() throws Exception{
         //given
         User user = accountService.findByEmail("user@test.com");
-        List<DetailCounselDto> result = counselService.getDetailCounsels(user.getId());
-        Long counselId = result.get(0).getCounselId();
+        Page<CounselBoardDto> counsels = counselBoardService.getCounsels(PageRequest.of(0, 1));
+        Long counselId = counsels.getContent().get(0).getCounselId();
         //when
-        ResultActions actions = mockMvc.perform(get("/counsels/" + counselId)
+        ResultActions actions = mockMvc.perform(get("/counsel-boards/" + counselId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
 
         //then
-        actions.andExpect(status().isOk())
-                .andDo(print());
-    }
-    @Test
-    @DisplayName("자신과 관련없는 사연을 요청했을 때, 404 반환")
-    void get_detail_counsel_fail() throws Exception{
-        //given
-        User user = accountService.findByEmail("user@test.com");
-        //when
-        ResultActions actions = mockMvc.perform(get("/counsels/"+404L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
-
-        //then
-        actions.andExpect(status().isNotFound())
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("유저가 상담중인 상담 상태, 200 반환")
-    void get_user_counsel_state_success() throws Exception{
-        //given
-        User user = accountService.findByEmail("counsellor1@test.com");
-        //when
-        ResultActions actions = mockMvc.perform(get("/counsels")
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
-        //then
-        MvcResult mvcResult = actions.andExpect(status().isOk())
+        MvcResult mvcResult = actions
+                .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-
-        String content = mvcResult.getResponse().getContentAsString();
-        List<UserCounselStateDto> result = mapper.readValue(content, mapper.getTypeFactory().constructCollectionType(List.class, UserCounselStateDto.class));
-        Assertions.assertThat(result).extracting("numOfReplies").containsExactly(1);
-    }
-
-    @Test
-    @DisplayName("상담 종료, 200 반환")
-    void finish_counsel() throws Exception{
-        //given
-        User user = accountService.findByEmail("user@test.com");
-        List<UserStoryStateDto> temp1 = storyService.getUserStoryState(user.getId());
-        Long storyId = temp1.get(0).getStoryId();
-        List<UserCounselStateDto> temp2 = storyService.getCounselStateOfUserWithStory(storyId, user.getId());
-        Long counselId = temp2.get(0).getCounselId();
-        EvaluateDto dto = new EvaluateDto(true, EvaluateDto.EvaluateType.GOOD);
-        String content = mapper.writeValueAsString(dto);
-        //when
-        ResultActions actions = mockMvc.perform(post("/counsels/" + counselId + "/finish")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content)
-                .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
-        //then
-        actions.andExpect(status().isOk())
-                .andDo(print());
-
-        List<UserCounselStateDto> temp3 = storyService.getCounselStateOfUserWithStory(storyId, user.getId());
-        Assertions.assertThat(temp3.size()).isEqualTo(1);
     }
 }
