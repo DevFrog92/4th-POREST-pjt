@@ -1,139 +1,202 @@
 <template>
   <div class="body-detail">
-    <!-- Previous Button -->
-    <button id="prev-btn">
-      <!-- <button id="prev-btn" @click="goPrevPage"> -->
-      <i class="fas fa-arrow-circle-left"></i>
-    </button>
-
+    <button @click="goBefore">before</button>
+    <button @click="goAfter">after</button>
+    <!-- <div v-for="n in pages" :key="n"> -->
+    <div class="book-page">
+      <div class="left">
+        <p>{{ leftTitle }}</p>
+        <p>{{ leftContent }}</p>
+      </div>
+      <div class="right">
+        <p>{{ rightTitle }}</p>
+        <p>{{ rightContent }}</p>
+      </div>
+    </div>
+    <!-- </div> -->
     <!-- Book -->
-    <div id="book" class="book">
-      <!-- Paper 1 -->
-      <div v-for="n in 3" :key="n">
-        <div :id="`p${n}`" class="paper">
-          <div class="front">
-            <div :id="`f${n}`" class="front-content">
-              <h1>Front {{ n }}</h1>
+    <!-- <div id="book" class="book">
+        <div v-if="n === 1">
+          <div id="p1" class="paper">
+            <div class="front" @click="goNextPage(n)">
+              <div id="f1" class="front-content">
+                <h1>{{ title }}</h1>
+              </div>
             </div>
-          </div>
-          <div class="back">
-            <div :id="`b${n}`" class="back-content">
-              <h1>Back {{ n }}</h1>
+            <div class="back" @click="goPrevPage(n)">
+              <div :id="`b1`" class="back-content">
+                aa
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- <div v-for="n in 3" :key="n">
-        <div :id="`p${n}`" class="paper">
-          <div class="front">
-            <div :id="`f${n}`" class="front-content">
-              <h1>Front {{ n }}</h1>
+        <div v-else>
+          <div :id="`p${n}`" class="paper">
+            <div class="front" @click="goNextPage(n)">
+              <div :id="`f${n}`" class="front-content">
+                <h1>답장 {{ n }}</h1>
+              </div>
             </div>
-          </div>
-          <div class="back">
-            <div :id="`b${n}`" class="back-content">
-              <h1>Back {{ n }}</h1>
+            <div class="back" @click="goPrevPage(n)">
+              <div :id="`b${n}`" class="back-content">
+                <h1>사연 {{ n }}</h1>
+              </div>
             </div>
           </div>
         </div>
       </div> -->
-    </div>
-
-    <!-- Next Button -->
-    <button id="next-btn">
-      <!-- <button id="next-btn" @click="goNextPage"> -->
-      <i class="fas fa-arrow-circle-right"></i>
-    </button>
   </div>
 </template>
 
 <script>
-import { init } from '@/assets/js/mail/MainBoardPage.js';
+import { getBoardDetail, updateDetailStatus } from '@/api/board';
 export default {
   data() {
     return {
       pages: 0,
+      currentLocation: 0,
+      maxLocation: 0,
+      detailData: {},
+      title: '',
+      leftTitle: '',
+      leftContent: '',
+      rightTitle: '',
+      rightContent: '',
+      number: 0,
     };
   },
   created() {
-    this.pages = 3;
-    this.$store.commit('getPageNumbers', this.pages);
+    this.currentLocation = 1;
+    this.maxLocation = this.pages + 1;
+    this.number = 0;
+    this.getLettersDetail();
   },
-  mounted() {
-    init();
-  },
+  // mounted() {
+  //   this.enterPosition();
+  // },
   methods: {
-    goPrevPage() {
-      if (this.currentLocation > 1) {
-        switch (this.currentLocation) {
-          case 2:
-            this.closeBook(true);
-            paper1.classList.remove('flipped');
-            paper1.style.zIndex = 3;
-            break;
-          case 3:
-            paper2.classList.remove('flipped');
-            paper2.style.zIndex = 2;
-            break;
-          case 4:
-            this.openBook();
-            paper3.classList.remove('flipped');
-            paper3.style.zIndex = 1;
-            break;
-          default:
-            throw new Error('unkown state');
-        }
-        this.currentLocation--;
-      }
+    getDetails() {
+      this.leftTitle = this.detailData['detail'][this.number]['letter'][
+        'detail'
+      ]['title'];
+      this.leftContent = this.detailData['detail'][this.number]['letter'][
+        'detail'
+      ]['content'];
+      this.rightTitle = this.detailData['detail'][this.number]['reply'][
+        'detail'
+      ]['title'];
+      this.rightContent = this.detailData['detail'][this.number]['reply'][
+        'detail'
+      ]['content'];
     },
-    goNextPage() {
-      // const paper2 = document.querySelector('#p2');
-      // const paper3 = document.querySelector('#p3');
-
-      // Business Logic
-      if (this.currentLocation < this.maxLocation) {
-        switch (this.currentLocation) {
-          case 1:
-            this.openBook();
-            paper1.classList.add('flipped');
-            paper1.style.zIndex = 1;
-            break;
-          case 2:
-            paper2.classList.add('flipped');
-            paper2.style.zIndex = 2;
-            break;
-          case 3:
-            paper3.classList.add('flipped');
-            paper3.style.zIndex = 3;
-            this.closeBook(false);
-            break;
-          default:
-            throw new Error('unkown state');
-        }
-        this.currentLocation++;
+    goBefore() {
+      if (this.number > 0) {
+        this.number--;
       }
+      this.getDetails();
     },
-    openBook() {
-      const prevBtn = document.querySelector('#prev-btn');
-      const nextBtn = document.querySelector('#next-btn');
-      const book = document.querySelector('#book');
-
-      book.style.transform = 'translateX(50%)';
-      prevBtn.style.transform = 'translateX(-180px)';
-      nextBtn.style.transform = 'translateX(180px)';
-    },
-    closeBook(isAtBeginning) {
-      const prevBtn = document.querySelector('#prev-btn');
-      const nextBtn = document.querySelector('#next-btn');
-      const book = document.querySelector('#book');
-
-      if (isAtBeginning) {
-        book.style.transform = 'translateX(0%)';
-      } else {
-        book.style.transform = 'translateX(100%)';
+    goAfter() {
+      if (this.number < this.pages - 1) {
+        this.number++;
       }
-      prevBtn.style.transform = 'translateX(0px)';
-      nextBtn.style.transform = 'translateX(0px)';
+      this.getDetails();
+    },
+    // enterPosition() {
+    //   let list = [];
+    //   for (let n = 1; n < this.pages + 1; n++) {
+    //     list.push(n);
+    //   }
+    //   let list2 = list.slice();
+    //   list2.reverse();
+
+    //   for (let i = 0; i < this.pages; i++) {
+    //     let num = i + 1;
+    //     let paper = document.querySelector(`#p${num}`);
+    //     paper.style.zIndex = list2[i];
+    //   }
+    // },
+    // goPrevPage(n) {
+    //   console.log('전');
+    //   console.log(n);
+    //   console.log(this.currentLocation);
+    //   console.log(this.maxLocation);
+    //   let paper = document.querySelector(`#p${n}`);
+    //   // let paper2 = document.querySelector(`#b${n}`);
+    //   // paper.style.zIndex = n;
+    //   // paper2.style.zIndex = n;
+    //   // paper.classList.remove('flipped');
+    //   // this.currentLocation--;
+    //   if (this.currentLocation > 1) {
+    //     if (this.currentLocation === 2) {
+    //       this.closeBook(true);
+    //       paper.classList.remove('flipped');
+    //       paper.style.zIndex = this.pages;
+    //       console.log('open!');
+    //       // } else if (this.currentLocation === 2) {
+    //     } else if (this.currentLocation === this.pages) {
+    //       console.log('open!!');
+    //       this.openBook();
+    //       paper.classList.remove('flipped');
+    //       paper.style.zIndex = 1;
+    //     } else {
+    //       paper.classList.remove('flipped');
+    //       paper.style.zIndex = 10;
+    //       console.log('open!!!');
+    //     }
+    //   }
+    //   this.currentLocation--;
+    // },
+    // goNextPage(n) {
+    //   console.log('후');
+    //   console.log(n);
+    //   console.log(this.currentLocation);
+    //   console.log(this.maxLocation);
+    //   let paper = document.querySelector(`#p${n}`);
+    //   // paper.style.zIndex = 2;
+    //   // paper.classList.add('flipped');
+    //   // this.currentLocation++;
+    //   if (this.currentLocation < this.maxLocation) {
+    //     if (this.currentLocation === 1) {
+    //       this.openBook();
+    //       paper.classList.add('flipped');
+    //       paper.style.zIndex = 1;
+    //     } else if (this.currentLocation === this.pages) {
+    //       paper.classList.add('flipped');
+    //       paper.style.zIndex = this.pages;
+    //       // paper.style.zIndex = 3;
+    //       this.closeBook(false);
+    //     } else {
+    //       paper.classList.add('flipped');
+    //       paper.style.zIndex = n;
+    //       // paper.style.zIndex = 2;
+    //     }
+    //     this.currentLocation++;
+    //   }
+    // },
+    // openBook() {
+    //   const book = document.querySelector('#book');
+    //   book.style.transform = 'translateX(50%)';
+    // },
+    // closeBook(isAtBeginning) {
+    //   const book = document.querySelector('#book');
+    //   if (isAtBeginning) {
+    //     book.style.transform = 'translateX(0%)';
+    //   } else {
+    //     book.style.transform = 'translateX(100%)';
+    //   }
+    // },
+    async getLettersDetail() {
+      const id = this.$store.state.pageNumbers;
+      try {
+        let { data } = await getBoardDetail(id);
+        this.detailData = data;
+        this.title = this.detailData['detail'][0]['letter']['detail']['title'];
+        this.pages = Number(data['detail'].length);
+        console.log('22', data);
+        this.getDetails();
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -146,14 +209,30 @@ export default {
   box-sizing: border-box;
 }
 
-.body {
-  height: 100vh;
-  display: flex;
+.body-detail {
+  width: 100%;
+  height: 100%;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+}
 
-  font-family: sans-serif;
+.book-page {
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
+
+.left {
+  width: 30%;
+  height: 50vh;
   background-color: powderblue;
+}
+
+.right {
+  width: 30%;
+  height: 100%;
+  background-color: blanchedalmond;
 }
 
 /* Book */
@@ -214,38 +293,24 @@ export default {
   transform: rotateY(-180deg);
 }
 
-/* Controller Buttons */
-button {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  margin: 10px;
-  transition: transform 0.5s;
-}
-
-button:focus {
-  outline: none;
-}
-
-button:hover i {
-  color: #636363;
-}
-
-i {
-  font-size: 50px;
-  color: gray;
-}
-
 /* Paper stack order */
-#p1 {
-  z-index: 3;
+/* #p1 {
+  z-index: 5;
 }
 
 #p2 {
-  z-index: 2;
+  z-index: 4;
 }
 
 #p3 {
-  z-index: 1;
+  z-index: 3;
 }
+
+#p4 {
+  z-index: 2;
+}
+
+#p5 {
+  z-index: 1;
+} */
 </style>

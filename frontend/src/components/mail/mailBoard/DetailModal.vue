@@ -14,6 +14,7 @@ export default {
   methods: {
     closeModal() {
       this.$store.commit('getBoardModalStatus', false);
+      this.$store.commit('getPageNumbers', 0);
     },
   },
 };
