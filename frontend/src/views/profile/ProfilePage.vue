@@ -57,6 +57,7 @@ export default {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  z-index: 3;
 }
 
 .profile-area {
@@ -87,7 +88,7 @@ export default {
 }
 
 .modal {
-  z-index: 2;
+  z-index: 5;
 }
 
 .oneStepBack {
