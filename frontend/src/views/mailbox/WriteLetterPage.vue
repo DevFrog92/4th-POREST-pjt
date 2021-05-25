@@ -56,10 +56,13 @@
     <div class="notification">
       <div class="noti_title">당신의 고민이 전송되었습니다.</div>
     </div>
+    <mouse class="mouse"></mouse>
   </div>
 </template>
 
 <script>
+import Mouse from '@/components/common/Mouse.vue';
+
 import { writeStory } from '@/api/stories';
 import { init } from '@/assets/js/mail/WriteLetterPage.js';
 export default {
@@ -72,6 +75,9 @@ export default {
         createAt: '',
       },
     };
+  },
+  components: {
+    Mouse,
   },
   methods: {
     async storyForm() {

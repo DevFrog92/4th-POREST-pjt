@@ -17,6 +17,14 @@ export default {
       this.$emit('dayoff');
     },
   },
+  mounted() {
+    const now = new Date();
+    const checkBox = document.querySelector('.toggle--checkbox');
+    let hour = now.getHours();
+    if (hour >= 7 && hour <= 19) {
+      checkBox.click();
+    }
+  },
 };
 </script>
 
