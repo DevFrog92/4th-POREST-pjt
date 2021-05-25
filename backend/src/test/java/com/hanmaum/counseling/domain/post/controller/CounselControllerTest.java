@@ -112,11 +112,6 @@ class CounselControllerTest {
         Long letterId2 = letterService.writeLetter(new FormDto("두번째 상담사의 답변입니다", "그러시군요 ㅋㅋ", null),
                 tempDto2.getCounselId(), tempDto2.getDetail().getLetterId(), counsellor2.getId());
     }
-    @AfterEach
-    void setDown(){
-        em.flush();
-        em.clear();
-    }
 
     @Test
     @DisplayName("유저가 작성한 사연의 답장 상태 제공, 200 반환")
