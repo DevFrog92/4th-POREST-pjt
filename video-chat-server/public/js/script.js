@@ -55,7 +55,6 @@ recognition.addEventListener('result',(e)=>{
 })
 
 function filterString(text) {
-  console.log(text,typeof text)
   let YokList = new Array('나쁜놈','바보','섹스','씹','니애미','엠창','개새끼','개색기','개색끼','개자식','개보지','개자지','개년','개걸래','개걸레','새끼야','씨발','씨팔','씨부랄','씨바랄','씹창','씹탱','씹보지','씨벌탱','씹자지','씨방세','씨방새','씨펄','시펄','십탱','씨박','썅','쌍놈','쌍넘','싸가지','쓰벌','씁얼','상넘이','상놈의','상놈이','상놈을','좆','좃','존나게','존만한','같은년','넣을년','버릴년','부랄년','뒤져라','바랄년','미친년','니기미','니미씹','니미씨',"니미 씨벌",'니미럴','니미랄','호로','후레아들','호로새끼','후레자식','후래자식','후라들년','후라들넘','빠구리','병신','죽어라');
   for (var n = 0; n < YokList.length; n++) {
     if (text.includes(YokList[n])) {
@@ -100,7 +99,6 @@ navigator.mediaDevices
     
 
     myPeer.on("call", (call) => {
-      console.log("calling");
       call.answer(stream);
       const video = document.createElement("video");
 
@@ -118,9 +116,7 @@ navigator.mediaDevices
     });
 
     chatInputBox.addEventListener("keydown", (e) => {
-      console.log("key down",chatInputBox.value);
       if (e.which === 13 && chatInputBox.value != "" && filterString(chatInputBox.value)) {
-        console.log("보낸다")
         socket.emit("message", {
           msg: chatInputBox.value,
           user: currentUserId,
@@ -130,7 +126,6 @@ navigator.mediaDevices
     });
 
     document.querySelector(".sendMsg").addEventListener("click", (e) => {
-      console.log("clicked");
       if (chatInputBox.value != "" && filterString(chatInputBox.value)) {
         socket.emit("message", {
           msg: chatInputBox.value,
@@ -141,11 +136,9 @@ navigator.mediaDevices
     });
 
     document.getElementById("muteButton").addEventListener("click", (e) => {
-      console.log("muteButton");
       muteUnmute();
     });
     document.getElementById("playPauseVideo").addEventListener("click", (e) => {
-      console.log("playPauseVideo");
       playStop();
     });
 
@@ -157,7 +150,6 @@ navigator.mediaDevices
     // });
 
     socket.on("createMessage", (message) => {
-      console.log("message", message);
       let li = document.createElement("li");
       if(filterString(message.msg)){
         if (message.user != currentUserId) {
@@ -201,12 +193,10 @@ myPeer.on("open", (id) => {
 });
 
 socket.on("user-connected", (userId) => {
-  console.log("User connectd :" + userId);
 });
 
 socket.on("user-disconnected", (userId) => {
   if (peers[userId]) {
-    console.log("disconnetced");
     peers[userId].close();
     socket.emit("leave-room", ROOM_ID, currentUserId);
   }
@@ -214,8 +204,6 @@ socket.on("user-disconnected", (userId) => {
 
 const connectToNewUser = (userId, streams) => {
   var call = myPeer.call(userId, streams);
-  console.log("call", call);
-  console.log(peers[userId]);
   const video = document.createElement("video");
   call.on("stream", (userVideoStream) => {
     addVideoStream(video, userVideoStream, userId, "other");
@@ -273,11 +261,9 @@ function addVideoStream(video, stream, userId, who) {
     // video.pause();
     // video.currentTime = 0;
   });
-  console.log("video attached");
   videoGrid.append(video);
   video.enabled = true;
 
-  console.log(userId, who);
   if (who === "me") {
     video.addEventListener("play", () => {
       if (document.querySelector("canvas")) {
@@ -289,7 +275,6 @@ function addVideoStream(video, stream, userId, who) {
         width: video.clientWidth ,
         height: video.clientHeight,
       };
-      // console.log(displaySize, video.clientWidth);
       faceapi.matchDimensions(canvas, displaySize);
       setInterval(async () => {
         const detections = await faceapi
@@ -307,12 +292,10 @@ function addVideoStream(video, stream, userId, who) {
           });
           varEmotion[emotion[0]] += 1;
         }
-        // console.log(varEmotion);
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
         faceapi.draw.drawDetections(canvas, resizedDetections);
         faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
         faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-        // console.log(varEmotion);
       }, 100);
     });
   }
@@ -339,16 +322,7 @@ exit.addEventListener('click', ()=> {
 
 })
 
-if (window.matchMedia('(orientation: portrait)').matches) {
-  console.log('세로야 임마!')
 
-		// Portrait 모드일 때 실행할 스크립트
-		// 폭과 높이가 같으면 Portrait 모드로 인식돼요
-	} else {
-		// Landscape 모드일 때 실행할 스크립트
-  console.log('가로 모드로 돌리기')
-
-	}
 
 const warning = document.querySelector('.warning-for-landsacpe')
 window.addEventListener('resize', function () {
