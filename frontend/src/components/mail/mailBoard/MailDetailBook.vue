@@ -1,87 +1,71 @@
 <template>
   <div class="body-detail">
     <!-- Previous Button -->
-    <button id="prev-btn" @click="goPrevPage">
+    <button id="prev-btn">
+      <!-- <button id="prev-btn" @click="goPrevPage"> -->
       <i class="fas fa-arrow-circle-left"></i>
     </button>
 
     <!-- Book -->
     <div id="book" class="book">
       <!-- Paper 1 -->
-      <div id="p1" class="paper">
-        <div class="front">
-          <div id="f1" class="front-content">
-            <h1>Front 1</h1>
+      <div v-for="n in 3" :key="n">
+        <div :id="`p${n}`" class="paper">
+          <div class="front">
+            <div :id="`f${n}`" class="front-content">
+              <h1>Front {{ n }}</h1>
+            </div>
           </div>
-        </div>
-        <div class="back">
-          <div id="b1" class="back-content">
-            <h1>Back 1</h1>
-          </div>
-        </div>
-      </div>
-      <!-- Paper 2 -->
-      <div id="p2" class="paper">
-        <div class="front">
-          <div id="f2" class="front-content">
-            <h1>Front 2</h1>
-          </div>
-        </div>
-        <div class="back">
-          <div id="b2" class="back-content">
-            <h1>Back 2</h1>
+          <div class="back">
+            <div :id="`b${n}`" class="back-content">
+              <h1>Back {{ n }}</h1>
+            </div>
           </div>
         </div>
       </div>
-      <!-- Paper 3 -->
-      <div id="p3" class="paper">
-        <div class="front">
-          <div id="f3" class="front-content">
-            <h1>Front 3</h1>
+      <!-- <div v-for="n in 3" :key="n">
+        <div :id="`p${n}`" class="paper">
+          <div class="front">
+            <div :id="`f${n}`" class="front-content">
+              <h1>Front {{ n }}</h1>
+            </div>
+          </div>
+          <div class="back">
+            <div :id="`b${n}`" class="back-content">
+              <h1>Back {{ n }}</h1>
+            </div>
           </div>
         </div>
-        <div class="back">
-          <div id="b3" class="back-content">
-            <h1>Back 3</h1>
-          </div>
-        </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Next Button -->
-    <button id="next-btn" @click="goNextPage">
+    <button id="next-btn">
+      <!-- <button id="next-btn" @click="goNextPage"> -->
       <i class="fas fa-arrow-circle-right"></i>
     </button>
   </div>
 </template>
 
 <script>
+import { init } from '@/assets/js/mail/MainBoardPage.js';
 export default {
-  // created() {
-  //   // References to DOM Elements
-  //   const prevBtn = document.querySelector('#prev-btn');
-  //   const nextBtn = document.querySelector('#next-btn');
-  //   const book = document.querySelector('#book');
-
-  //   const paper1 = document.querySelector('#p1');
-  //   const paper2 = document.querySelector('#p2');
-  //   const paper3 = document.querySelector('#p3');
-
-  //   // Business Logic
-  //   let currentLocation = 1;
-  //   let numOfPapers = 3;
-  //   let maxLocation = numOfPapers + 1;
-  // },
+  data() {
+    return {
+      pages: 0,
+    };
+  },
+  created() {
+    this.pages = 3;
+    this.$store.commit('getPageNumbers', this.pages);
+  },
+  mounted() {
+    init();
+  },
   methods: {
     goPrevPage() {
-      const paper1 = document.querySelector('#p1');
-      const paper2 = document.querySelector('#p2');
-      const paper3 = document.querySelector('#p3');
-
-      // Business Logic
-      let currentLocation = 1;
-      if (currentLocation > 1) {
-        switch (currentLocation) {
+      if (this.currentLocation > 1) {
+        switch (this.currentLocation) {
           case 2:
             this.closeBook(true);
             paper1.classList.remove('flipped');
@@ -99,20 +83,16 @@ export default {
           default:
             throw new Error('unkown state');
         }
-        currentLocation--;
+        this.currentLocation--;
       }
     },
     goNextPage() {
-      const paper1 = document.querySelector('#p1');
-      const paper2 = document.querySelector('#p2');
-      const paper3 = document.querySelector('#p3');
+      // const paper2 = document.querySelector('#p2');
+      // const paper3 = document.querySelector('#p3');
 
       // Business Logic
-      let currentLocation = 1;
-      let numOfPapers = 3;
-      let maxLocation = numOfPapers + 1;
-      if (currentLocation < maxLocation) {
-        switch (currentLocation) {
+      if (this.currentLocation < this.maxLocation) {
+        switch (this.currentLocation) {
           case 1:
             this.openBook();
             paper1.classList.add('flipped');
@@ -130,7 +110,7 @@ export default {
           default:
             throw new Error('unkown state');
         }
-        currentLocation++;
+        this.currentLocation++;
       }
     },
     openBook() {
@@ -152,7 +132,6 @@ export default {
       } else {
         book.style.transform = 'translateX(100%)';
       }
-
       prevBtn.style.transform = 'translateX(0px)';
       nextBtn.style.transform = 'translateX(0px)';
     },
@@ -181,9 +160,7 @@ export default {
 .book {
   position: relative;
   width: 20vw;
-  /* width: 350px; */
   height: 60vh;
-  /* height: 500px; */
   transition: transform 0.5s;
 }
 

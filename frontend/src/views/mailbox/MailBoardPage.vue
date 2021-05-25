@@ -3,6 +3,9 @@
     <detail-modal v-if="$store.state.openBoardModal" class="modal">
       <mail-detail-book></mail-detail-book>
     </detail-modal>
+    <!-- <detail-modal v-if="$store.state.openBoardModal" class="modal">
+      <board-all-letters></board-all-letters>
+    </detail-modal> -->
     <div class="container">
       <div class="book-board" @click="openModal">
         <div class="cover"></div>
@@ -44,7 +47,7 @@ export default {
 }
 
 .container {
-  background: chartreuse;
+  /* background: chartreuse; */
   width: 70%;
   height: 80%;
   padding: 3vh 3vw 3vh 3vw;

@@ -39,6 +39,7 @@ export default {
 
   // mail-board
   openBoardModal: false,
+  pageNumbers: 0,
 
   // profile
   modalProfileSetting: false,

@@ -74,6 +74,9 @@ export default {
   getBoardModalStatus(state, openBoardModal) {
     state.openBoardModal = openBoardModal;
   },
+  getPageNumbers(state, pageNumbers) {
+    state.pageNumbers = pageNumbers;
+  },
 
   // 프로필
   setModalProfile(state, modalProfileSetting) {
