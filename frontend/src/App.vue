@@ -57,7 +57,7 @@
         </li>
         <li @click="goToVideoChat"><span class="nav-detail">마음나눔</span></li>
         <li @click="goToJoy"><span class="nav-detail">쉼터</span></li>
-        <li @click="logout" class="nav-detail">로그아웃</li>
+        <li @click="logout" class="nav-detail logout">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
         <li>로그인</li>
@@ -246,15 +246,6 @@ export default {
   transform: rotateZ(180deg);
 }
 
-.logout {
-  position: fixed;
-  width: 3rem;
-  height: 3rem;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 200;
-  color: white;
-}
 @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
@@ -504,6 +495,6 @@ nav.active ul {
 }
 
 .logout {
-  color: red;
+  color: salmon;
 }
 </style>

@@ -5,7 +5,9 @@
     </span>
     <div class="envelope new">
       <div class="front">
-        <div class="stamp"></div>
+        <div class="stamp">
+          <img src="../../assets/image/sticker/10.png" alt="" />
+        </div>
         <div class="mailme mail_reply_title">
           <p v-text="$store.state.selectedStory.detail.title"></p>
         </div>
@@ -30,7 +32,9 @@
 
     <div class="envelope open reply">
       <div class="front">
-        <div class="stamp"></div>
+        <div class="stamp">
+          <img src="../../assets/image/sticker/10.png" alt="" />
+        </div>
         <div class="mailme">
           <p class="p_title">당신의 소중한 답장</p>
           <p class="p_subtitle">porest가 전해드립니다.</p>
