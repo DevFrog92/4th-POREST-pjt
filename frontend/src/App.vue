@@ -72,7 +72,6 @@
       @dayoff="dayoff"
       @lowvolumn="lowvolumn"
       @stopBgm="stopBgm"
-      @playBgm="palyBgm"
     />
   </div>
 </template>
@@ -147,6 +146,7 @@ export default {
       this.$router.push('/joy');
     },
     stopBgm() {
+      console.log('stop');
       const audioPlayer = document.querySelector('#audio-player');
       const audioContainer = document.querySelector('#music-container');
       audioContainer.classList.add('music-player--disabled');
@@ -215,7 +215,7 @@ export default {
   width: 200vw;
   height: 290vh;
   border-radius: 100%;
-  transition: all 2s ease-in-out;
+  transition: all 1.7s ease-in-out;
 }
 
 .day {

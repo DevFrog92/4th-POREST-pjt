@@ -136,7 +136,7 @@ export default {
       this.$router.go(-1);
     },
     pauseAudio(){
-      this.$emit("playBgm");
+      this.$emit("controlMusic","play");
       let audio = document.querySelector('#audio');
       audio.pause();
       this.playAudio = false;

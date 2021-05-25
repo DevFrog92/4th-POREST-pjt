@@ -81,11 +81,14 @@
         <div class="flap top-flap"></div>
       </div>
     </div>
+    <mouse class="mouse"></mouse>
   </div>
 </template>
 
 <script>
 import { init } from '@/assets/js/mail/RootMailReplyPage.js';
+import Mouse from '@/components/common/Mouse.vue';
+
 import { selectStory } from '@/api/stories';
 import { writeLetter } from '@/api/letters';
 export default {
@@ -116,6 +119,9 @@ export default {
         },
       },
     };
+  },
+  components: {
+    Mouse,
   },
   methods: {
     moveToBack() {
