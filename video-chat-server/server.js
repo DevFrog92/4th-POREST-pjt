@@ -63,7 +63,7 @@ app.post("/userId",(req,res) =>{
 ///
 
 app.post("/", (req, res) => {
-  res.redirect(`video_chat/room/${req.body.roomId}`);
+  res.redirect(307,`video_chat/room/${req.body.roomId}`);
 });
 
 
@@ -71,13 +71,15 @@ app.post('/ar',(req,res)=>{
   userId = req.body.userId;
   res.cookie('userId',req.body.userId);
   sessionstorage.setItem('userNickName',req.body.userId);
+  console.log('creates')
+
   // sessionStorage.setItem('userNickName',req.body.userId);
   // sessionStorage.setItem('roomName',req.body.roomName);
-  res.redirect(`video_chat/room/ar/${req.body.roomId}`);
+  res.redirect(307,`video_chat/room/ar/${req.body.roomId}`);
 })
 
 app.post("/secret", (req, res) => {
-  res.redirect(`video_chat/room/secret/${uuidV4()}`);
+  res.redirect(307,`video_chat/room/secret/${uuidV4()}`);
 });
 
 // app.get("/abcd/ar", (req, res) => {

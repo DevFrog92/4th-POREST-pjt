@@ -156,8 +156,9 @@ function initializeSession(video_apiKey, video_sessionId) {
   // Subscribe to a newly created stream
   
   session.on("streamCreated", function (event) {
+    console.log('streamCreated')
     people++;
-    // const member = document.createElement('li')
+    // const member = document.createElement('li')zz
     // const userName =decodeURIComponent(document.cookie).split(';');
     // console.log(userName)
     // member.innerHTML = `<span class="avatar"><img src="/image/happy.png"></span>`
@@ -175,6 +176,7 @@ function initializeSession(video_apiKey, video_sessionId) {
     );
   });
   // Create a publisher
+  console.log('publisher')
   publisher = OT.initPublisher(
     "publisher",
     {

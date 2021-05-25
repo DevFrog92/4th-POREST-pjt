@@ -1,4 +1,8 @@
 // document
+
+
+
+
 const chatInputBox = document.getElementById("chat_message");
 const all_messages = document.getElementById("all_messages");
 const main__chat__window = document.getElementById("main__chat__window");
@@ -265,39 +269,39 @@ function addVideoStream(video, stream, userId, who) {
   video.enabled = true;
 
   if (who === "me") {
-    video.addEventListener("play", () => {
-      if (document.querySelector("canvas")) {
-        document.querySelector("canvas").remove();
-      }
-      const canvas = faceapi.createCanvasFromMedia(video);
-      videoGrid.append(canvas);
-      const displaySize = {
-        width: video.clientWidth ,
-        height: video.clientHeight,
-      };
-      faceapi.matchDimensions(canvas, displaySize);
-      setInterval(async () => {
-        const detections = await faceapi
-          .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-          .withFaceLandmarks()
-          .withFaceExpressions();
-        const resizedDetections = faceapi.resizeResults(
-          detections,
-          displaySize
-        );
-        if(resizedDetections && resizedDetections[0]){
-          const arr = resizedDetections[0].expressions;
-          const emotion = Object.keys(arr).sort(function (a, b) {
-            return -arr[a] + arr[b];
-          });
-          varEmotion[emotion[0]] += 1;
-        }
-        canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-        faceapi.draw.drawDetections(canvas, resizedDetections);
-        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-        faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-      }, 100);
-    });
+    // video.addEventListener("play", () => {
+    //   if (document.querySelector("canvas")) {
+    //     document.querySelector("canvas").remove();
+    //   }
+    //   const canvas = faceapi.createCanvasFromMedia(video);
+    //   videoGrid.append(canvas);
+    //   const displaySize = {
+    //     width: video.clientWidth ,
+    //     height: video.clientHeight,
+    //   };
+    //   faceapi.matchDimensions(canvas, displaySize);
+    //   setInterval(async () => {
+    //     const detections = await faceapi
+    //       .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+    //       .withFaceLandmarks()
+    //       .withFaceExpressions();
+    //     const resizedDetections = faceapi.resizeResults(
+    //       detections,
+    //       displaySize
+    //     );
+    //     if(resizedDetections && resizedDetections[0]){
+    //       const arr = resizedDetections[0].expressions;
+    //       const emotion = Object.keys(arr).sort(function (a, b) {
+    //         return -arr[a] + arr[b];
+    //       });
+    //       varEmotion[emotion[0]] += 1;
+    //     }
+    //     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+    //     faceapi.draw.drawDetections(canvas, resizedDetections);
+    //     faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+    //     faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+    //   }, 100);
+    // });
   }
 }
 
