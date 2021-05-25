@@ -25,7 +25,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
-    //TODO : 이미지 변경 로직이 변경되면서 삭제 예정
     public Map<String, Object> updateProfileImg(MultipartFile multipartFile, HttpServletRequest request){
 
         //authorization header 가지고오기
@@ -61,5 +60,19 @@ public class UserService {
         user.setProfileImgNumber(imgNumber);
         userRepository.save(user);
 
+    }
+
+    public Map<String, Object> compareTemperature(int temp, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtProvider.getEmailFromToken(token);
+        User user = userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
+        Map<String, Object> result = new HashMap<>();
+        if(temp == user.getTemperature()){
+            result.put("isSameTemp",true);
+        }
+        else{
+            result.put("isSameTemp",false);
+        }
+        return result;
     }
 }
