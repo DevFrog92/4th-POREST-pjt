@@ -77,7 +77,7 @@ export default {
 .feeling-record-background {
   height: 100vh;
   width: 100vw;
-  margin: 0;
+  /* margin: 0; */
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
@@ -105,7 +105,7 @@ export default {
 .calendar-area,
 .diary-area {
   position: absolute;
-  top: 0;
+  top: 5vh;
   left: 0;
   width: 100%;
   height: 100%;
