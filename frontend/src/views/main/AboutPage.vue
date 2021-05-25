@@ -1,30 +1,31 @@
 <template>
   <div class="about" ondragstart="return false">
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="about_grid">
       <div class="about_con about_left_size">
-
         <div class="menu">
           <div class="active" data-value="1">
             <span>porest</span>
           </div>
           <div data-value="2">
-           <span>팀소개</span>
+            <span>팀소개</span>
           </div>
           <div data-value="3">
             <span>후원</span>
           </div>
           <div data-value="4">
-           <span>고객센터</span>
+            <span>고객센터</span>
           </div>
         </div>
-
       </div>
       <div class="about_con about_right_size">
         <ul class="about_content">
           <li class="active">
             <div class="aboutporest">
               <p class="aboutporest_info1_1">
-               porest
+                porest
               </p>
               <p class="aboutporest_info2">
                 ( post + rest )
@@ -50,14 +51,15 @@
               </p>
               <div class="aboutteam_leader">
                 <div class="aboutteam_image">
-                  <img src="@/assets/image/teamimage.png" alt="">
+                  <img src="@/assets/image/teamimage.png" alt="" />
                 </div>
                 <div class="aboutteam_info">
                   <p class="info1">
                     porest를 지키고 있는 Guardians of porest팀입니다.
                   </p>
                   <p class="info2">
-                    누구에게나 필요한 서비스를 만들기 위해 최선을 다하겠습니다.<br>
+                    누구에게나 필요한 서비스를 만들기 위해 최선을
+                    다하겠습니다.<br />
                     오늘 저희 porest를 방문해주신 모든 분들 항상 감사합니다.
                   </p>
                 </div>
@@ -68,7 +70,8 @@
           <li>
             <div class="aboutsupport">
               <p class="support_info_1">
-                porest는 치료가 필요하지만 경제적으로 힘든 분들을 후원하고 있습니다.
+                porest는 치료가 필요하지만 경제적으로 힘든 분들을 후원하고
+                있습니다.
               </p>
               <p class="support_info_2">
                 저희와 뜻을 함께하는 분들의 후원을 기다립니다.
@@ -91,11 +94,10 @@
           <li>
             <div class="aboutcontact">
               <div class="contactinfo_title">
-                문의사항이 있으신 경우 아래 오픈채팅방으로 메세지를 보내주시면 빠른 시일내에
-                답변드리겠습니다.
-              </div>   
+                문의사항이 있으신 경우 아래 오픈채팅방으로 메세지를 보내주시면
+                빠른 시일내에 답변드리겠습니다.
+              </div>
               <img src="@/assets/image/qrcode2.jpg" alt="" />
-
             </div>
           </li>
         </ul>
@@ -105,7 +107,7 @@
 </template>
 
 <script>
-import init from "@/assets/js/main/AboutPage.js";
+import init from '@/assets/js/main/AboutPage.js';
 
 export default {
   mounted() {
@@ -113,30 +115,32 @@ export default {
   },
   data() {
     return {
-      message_senderId: localStorage.getItem("user_id"),
-      message_title: "",
-      message_receiverId: "admin",
-      message_content: "",
+      message_senderId: localStorage.getItem('user_id'),
+      message_title: '',
+      message_receiverId: 'admin',
+      message_content: '',
     };
   },
   methods: {
+    moveToBack() {
+      this.$router.go(-1);
+    },
     sendDM() {
       http
-        .post("/message/sendMessage", {
+        .post('/message/sendMessage', {
           message_senderId: this.message_senderId,
           message_title: this.message_title,
           message_receiverId: this.message_receiverId,
           message_content: this.message_content,
         })
         .then(() => {
-          alert("전송 완료");
-          this.message_title = "";
-          this.message_content = "";
+          alert('전송 완료');
+          this.message_title = '';
+          this.message_content = '';
         });
     },
   },
 };
 </script>
 
-<style scoped src="@/assets/css/main/AboutPage.css">
-</style>
+<style scoped src="@/assets/css/main/AboutPage.css"></style>
