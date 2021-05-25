@@ -7,7 +7,10 @@ const signupUser = (userData) =>
       return { status: true, message: "이메일을 확인해주세요" };
     })
     .catch((error) => {
-      return { status: false, message: "다시 시도해 주세요" };
+      return {
+        status: false,
+        message: error.response.data.message == null ? "다시 시도해 주세요" : error.response.data.message,
+      };
     });
 
 const loginUser = (userData) =>
@@ -71,5 +74,22 @@ const verificationTemperature = (userData) =>
     .catch((error) => {
       return { status: false, message: error.response.data.message };
     });
-
-export { signupUser, loginUser, emailCheck, findPassword, emailVerify, verifyCheck, verificationTemperature };
+const signupState = () =>
+  instance
+    .get("/signupState")
+    .then((res) => {
+      return { status: true, message: res.data.message, data: res.data.state };
+    })
+    .catch((error) => {
+      return { status: false, message: error.response.data.message };
+    });
+export {
+  signupUser,
+  loginUser,
+  emailCheck,
+  findPassword,
+  emailVerify,
+  verifyCheck,
+  verificationTemperature,
+  signupState,
+};
