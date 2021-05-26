@@ -117,10 +117,12 @@ public class AccountService {
         user.setPassword(newPassword);
         userRepository.save(user);
 
-        FirebaseAuth.getInstance()
+        UserRecord.UpdateRequest updateRequest =  FirebaseAuth.getInstance()
                 .getUserByEmail(email)
                 .updateRequest()
                 .setPassword(updatePasswordDto.getNewPassword());
+
+        FirebaseAuth.getInstance().updateUser(updateRequest);
     }
 
 
@@ -179,10 +181,12 @@ public class AccountService {
 
             emailUtil.sendMail(email,"POREST의 임시 비밀번호 메일입니다.", temporaryPassword);
             userRepository.save(user);
-            FirebaseAuth.getInstance()
+            UserRecord.UpdateRequest request = FirebaseAuth.getInstance()
                     .getUserByEmail(email)
                     .updateRequest()
                     .setPassword(temporaryPassword);
+
+            FirebaseAuth.getInstance().updateUser(request);
         }
         else{
             result.put("message","입력하신 정보가 올바르지 않습니다.");

@@ -6,7 +6,7 @@
     <div class="envelope new">
       <div class="front">
         <div class="stamp">
-          <img src="../../assets/image/sticker/10.png" alt="" />
+          <img src="../../assets/image/gurumi.png" alt="" />
         </div>
         <div class="mailme mail_reply_title">
           <p v-text="$store.state.selectedStory.detail.title"></p>
@@ -33,7 +33,7 @@
     <div class="envelope open reply">
       <div class="front">
         <div class="stamp">
-          <img src="../../assets/image/sticker/10.png" alt="" />
+          <img src="../../assets/image/gurumi.png" alt="" />
         </div>
         <div class="mailme">
           <p class="p_title">당신의 소중한 답장</p>

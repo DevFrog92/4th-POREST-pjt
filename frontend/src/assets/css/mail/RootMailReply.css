@@ -195,17 +195,21 @@
 }
 
 .stamp img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotate(20deg);
   width: 3rem;
   height: 3rem;
 }
-.envelope .front .stamp:after {
+/* .envelope .front .stamp:after {
   content: "";
   display: block;
   width: 100%;
   height: 100%;
   background-color: #F2F2CF;
   border-radius: 2px;
-}
+} */
 .envelope .front .mailme {
   transform: translate3d(0, 0, 1px);
   text-align: center;

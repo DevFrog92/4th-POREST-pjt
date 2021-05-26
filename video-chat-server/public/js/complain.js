@@ -12,7 +12,23 @@ let sadState=0;
 let currentSad=0;
 let audioChunks =[];
 
+const greetings = ['안녕', '오랜만이', '반가워', '처음뵙겠습'];
+const emotions_neg = ['아니 별로', '힘들었어', '힘든하루였', '행복하지않은하루','우울한하루','피곤했어','피곤한하루','짜증나는하루','우울했어','슬픈하루','답답한하루'];
+const emotions_pos = ['응','행복한하루','재밌는','즐거운','괜찮은', '신나는','행복했'];
+const reasons = ['혼났어','화냈어','맞았어','기분나빴','기분나쁜','짜증났', '우울했'];
+const troubles = ['속상','말할 사람이 없','내 말을 안 들어','들어 줄 사람이 없','혼자 있고 싶','말하기 싫'];
+const farewells = ['또 올게', '갈게', '나 갈게', '다음에 봐', '나중에 봐', "또 보자"];
+
+const emotionMap = new Map();
+emotionMap.set('greetings', greetings);
+emotionMap.set('negative', emotions_neg);
+emotionMap.set('positive', emotions_pos);
+emotionMap.set('reasons', reasons);
+emotionMap.set('troubles', troubles);
+emotionMap.set('farewells', farewells);
+
 // const video = document.querySelector('.myVideo')
+//2, 15, 17
 const arr = [0,0,0,0,0,0,0,0,0,0,0,0,2,3];
 const varEmotion = {
   angry: 0,
@@ -82,8 +98,6 @@ var getUserMedia =
     addVideoStream(myVideo, stream);
     handlerFunction(stream);
   })
-
-
 
 // recording
 function handlerFunction(stream) {
@@ -161,6 +175,42 @@ function addVideoStream(video, stream) {
 }    
 }
 
+const bagOfWords = (text) => {
+  const wordSet = new Set();
+  for(i = 0; i<text.length-1; i++){
+      let c = text.charAt(i) + text.charAt(i+1);
+      wordSet.add(c);
+  }
+  return wordSet;
+}
+
+const calSimilarity = (text_a, text_b) => {
+  let a = bagOfWords(text_a);
+  let b = bagOfWords(text_b);
+  let union = new Set(a);
+  for(e of b){
+      union.add(e);
+  }
+  let intersection = new Set([...a].filter(x => b.has(x)));
+  let usize = union.size > 0 ? union.size : 1;
+  let isize = intersection.size;
+  return isize/usize;
+}
+
+const extractEmotions = (text) => {
+  let max = 0;
+  let maxEmotion = 'none';
+  emotionMap.forEach((value, key) => {
+    value.forEach((str) => {
+      let sim = calSimilarity(text, str);
+      if(sim >= 0.1 && sim > max){
+        max = sim;
+        maxEmotion = key;
+      }
+    })
+  })
+  return maxEmotion;
+}
 
 
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -177,17 +227,17 @@ recognition.addEventListener('result',(e)=>{
   .join('');
   // textSection.appendChild(p)
   if(e.results[0].isFinal){
-    if(text.includes('안녕')|| text.includes('반가워')  && answer === 0){
-      currentSad = varEmotion['sad'];
+    console.log(text);
+    console.log(extractEmotions(text));
+    const emotion = extractEmotions(text);
+    if(emotion === 'greetings' && answer == 0){
       defaultFace()
       answer++;
       setTimeout(()=>{
         sayLongSpeek();
         audioPlay(12)
       },200)
-    }
-
-    if(text.includes('아니')|| text.includes('별로') || text.includes('행복하지 않았어') && answer === 1){
+    }else if(emotion === 'negative' && answer === 1){
       defaultFace()
       storyContent = 'sad';
       answer++;
@@ -195,15 +245,27 @@ recognition.addEventListener('result',(e)=>{
         sayHello();
         audioPlay(13)
       },200)
-    }
-    
-    if(text.includes('응')|| text.includes('행복했어') || text.includes('재밌었어') && answer === 1){
+    }else if(emotion === 'negative'){
+      let temp = [2, 15, 17];
+      defaultFace();
+      setTimeout(()=>{
+        sayHello();
+        audioPlay(temp[Math.floor(Math.random()*3)]);
+      },2000)
+    }else if(emotion === 'positive'){
       defaultFace()
       storyContent = 'happy';
       answer++;
       setTimeout(()=>{
         saySpeek();
         audioPlay(14)
+      },300)
+    }else if(emotion === 'reasons'){
+      defaultFace()
+      let temp = [1, 10];
+      setTimeout(()=>{
+        sayHello();
+        audioPlay(temp[Math.round(Math.random())]);
       },300)
     }
 
@@ -215,14 +277,8 @@ recognition.addEventListener('result',(e)=>{
         audioPlay(happy[Math.round(Math.random())])
       },300)
     }
-    if(text.includes('혼났어') || text.includes('화냈어') || text.includes('맞았어') || text.includes('기분 나빴어')){
-      defaultFace()
-      setTimeout(()=>{
-        sayHello();
-        audioPlay(10)
-      },300)
-    }
-    if(text.includes('내 말을 안 들어줘') || text.includes('들어 줄 사람이 없어') || text.includes('들어줄 사람이 없어') || text.includes('이야기할 사람이 없어')){
+
+    if(emotion === 'troubles'){
       defaultFace()
       setTimeout(()=>{
         saySpeek();
@@ -231,7 +287,7 @@ recognition.addEventListener('result',(e)=>{
     }
 
 
-    if(text.includes('다음에 또 올게') || text.includes('갈게') ){
+    if(emotion === 'farewells' && answer > 1){
       const varEmotion_current = varEmotion['happy'];
       let now;
       defaultFace()
@@ -313,23 +369,6 @@ recognition.addEventListener('result',(e)=>{
           }
         },2500)
       },7700);
-    }
-
-    if(text.includes('힘들')){
-      let hard = [2,15];
-      sayHello();
-      audioPlay(hard[Math.round(Math.random())]);
-      setTimeout(()=>{
-        defaultFace()
-      },2500)
-    }
-    if(text.includes('속상')){
-      let bad = [1,15];
-      sayHello();
-      audioPlay(bad[Math.round(Math.random())]);
-      setTimeout(()=>{
-        defaultFace()
-      },2500)
     }
   }
 })
