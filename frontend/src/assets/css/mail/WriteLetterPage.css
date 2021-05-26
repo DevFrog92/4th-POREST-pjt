@@ -138,6 +138,7 @@
   top: 1rem;
   left: 1rem;
   font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -155,6 +156,7 @@
   transition: transform 1s ease;
   font-family: 'Mujinjang';
   /* font-family: 'Love_son'; */
+  font-weight: bold;
   color: #1F1F1F;
 }
 .envelope .front, .envelope .back {
@@ -221,10 +223,12 @@
 .envelope .front .mailme p:first-child {
   font-size: 50px;
   line-height: 90px;
+  font-weight: bold;
 }
 
 .envelope .front .mailme p:last-child {
   font-size: 30px;
+  font-weight: bold;
 }
 .envelope .back {
     position: relative;
@@ -355,12 +359,14 @@
   font-family: 'Mujinjang';
   /* font-family: 'Love_son'; */
   font-size: 1.2rem;
+  font-weight: bold;
   color: black;
 }
 
 .envelope .back .letter textarea {
   font-family: 'Mujinjang';
   /* font-family: 'Love_son'; */
+  font-weight: bold;
   font-size: 20px;
   white-space: pre-wrap;
 }
@@ -369,7 +375,7 @@
   height: 31px;
 }
 .envelope .back .letter input[type='submit'] {
-  /* font-weight: bold; */
+  font-weight: bold;
   cursor: pointer;
   border: none;
   padding: 5px 20px 5px 20px;
@@ -429,7 +435,7 @@
   opacity: 0;
   font-family: 'Mujinjang';
   /* font-family: 'Love_son'; */
-  /* font-weight: bold; */
+  font-weight: bold;
   font-size: 100px;
   width: 100%;
   height: 100%;

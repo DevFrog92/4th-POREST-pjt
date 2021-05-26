@@ -142,7 +142,7 @@
   transition: all 1s ease;
   font-family: 'Mujinjang';
   /* font-family: 'Love_son'; */
-
+  font-weight: bold;
   color: #1F1F1F;
 }
 
@@ -217,7 +217,7 @@
   vertical-align: middle;
 }
 .envelope .front .mailme p {
-  /* font-weight: bold; */
+  font-weight: bold;
  
   margin: 0;
 }
@@ -236,6 +236,7 @@ line-height: 5vh;
 font-family: 'Mujinjang';
 /* font-family: 'Love_son';
 font-weight: bold; */
+font-weight: bold;
 }
 
 .envelope .back {
@@ -320,6 +321,7 @@ font-weight: bold; */
 }
 .root-mail{
   font-size: 25px;
+  font-weight: bold;
   /* font-weight: 600; */
   color: black;
   height: 70%;
@@ -330,6 +332,7 @@ font-weight: bold; */
 .root-mail p{
   font-size: 25px;
   /* font-weight: 600; */
+  font-weight: bold;
   color: black;
   height: 70%;
   letter-spacing: 2px;
@@ -349,7 +352,7 @@ font-weight: bold; */
 
 
 .btnReply{
-  /* font-weight: bold; */
+  font-weight: bold;
   cursor: pointer;
   border: none;
   padding: 6px 10px 6px 13.2px;
@@ -375,6 +378,7 @@ font-weight: bold; */
 .envelope .back .letter label {
   position: absolute;
   font-size: 15px;
+  font-weight: bold;
   line-height: 34px;
   opacity: 0;
   top: -15px;
@@ -406,7 +410,7 @@ font-weight: bold; */
 }
 .envelope .back .letter input, .envelope .back .letter textarea {
   /* font-family: 'Love_son'; */
-  /* font-weight: bold; */
+  font-weight: bold;
   font-size: 1.1vw;
   /* font-size: 1.2rem; */
   color: black;
@@ -416,7 +420,7 @@ font-weight: bold; */
   height: 31px;
 }
 .envelope .back .letter input[type='submit'] {
-  /* font-weight: bold; */
+  font-weight: bold;
   cursor: pointer;
   border: none;
   padding: 4px 20px 5px 20px;
@@ -437,6 +441,7 @@ font-weight: bold; */
   height: 175px;
   /* font-family: 'Love_son';
   font-weight: bold; */
+  font-weight: bold;
   font-family: 'Mujinjang';
 }
 
@@ -510,5 +515,6 @@ font-weight: bold; */
   top: 1rem;
   left: 1rem;
   font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
 }
