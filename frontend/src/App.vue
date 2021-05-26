@@ -43,9 +43,9 @@
         </div>
       </div>
     </div>
-    <nav id="nav">
+    <nav id="nav" v-show="$store.state.id !== ''">
       <button class="nav-icon" id="nav-icon"><span></span></button>
-      <ul v-if="$store.state.id" class="nav_ul">
+      <ul class="nav_ul">
         <li @click="goToMain">
           <span class="nav-detail">홈</span>
         </li>
@@ -59,9 +59,9 @@
         <li @click="goToJoy"><span class="nav-detail">쉼터</span></li>
         <li @click="logout" class="nav-detail logout">로그아웃</li>
       </ul>
-      <ul v-else class="nav_ul">
+      <!-- <ul v-else class="nav_ul">
         <li>로그인</li>
-      </ul>
+      </ul> -->
     </nav>
     <router-view
       :user="user"
