@@ -4,6 +4,9 @@
       <span @click="goOneStepBack" class="oneStepBack">
         <i class="fas fa-arrow-left"></i>
       </span>
+      <span class="intro">
+        {{ $store.state.nickname }}님! 오늘 하루는 어떠셨나요?
+      </span>
       <div class="wrapper" @click="move">
         <div class="calendar-area box fade-in">
           <calendar></calendar>
@@ -82,6 +85,18 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
+}
+
+.intro {
+  /* z-index: 100; */
+  position: absolute;
+  top: 10vh;
+  /* left: 1rem; */
+  font-size: 1.3vw;
+  color: #fff;
+  font-family: 'GyeonggiBatang';
+  font-size: 1.7vw;
+  font-weight: bold;
 }
 
 .feeling-container {
