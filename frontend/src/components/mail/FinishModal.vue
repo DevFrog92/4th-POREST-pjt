@@ -22,10 +22,10 @@
         같은 고민을 가진 다른 분들에게 사연을 공개하시겠습니까?
       </div>
       <div class="inner__content">
-        <div class="public" @click="publicState == true">
+        <div class="public" @click="changePublicData(true)">
           네. 저와 같은 분들을 위해서 공유하겠습니다.
         </div>
-        <div class="nonpublic" @click="publicState == false">
+        <div class="nonpublic" @click="changePublicData(false)">
           아니요. 저는 공유하지 않겠습니다.
         </div>
       </div>
@@ -60,6 +60,13 @@ export default {
       };
       finishLetter(letterData);
       this.exit();
+    },
+    changePublicData(n) {
+      if (n === true) {
+        this.publicState = true;
+      } else if (n === false) {
+        this.publicState = false;
+      }
     },
     animation() {
       const publicBtn = document.querySelector('.public');

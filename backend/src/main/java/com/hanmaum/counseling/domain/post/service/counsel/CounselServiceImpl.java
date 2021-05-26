@@ -42,7 +42,7 @@ public class CounselServiceImpl implements CounselService{
 
     private DetailCounselDto convertToDetailCounselDto(Counsel counsel) {
         List<Letter> letters = counsel.getLetters();
-        DetailCounselDto result = new DetailCounselDto(counsel.getId(), counsel.getStory().getWriterNickName(),  counsel.getCounsellorNickname());
+        DetailCounselDto result = new DetailCounselDto(counsel.getId(), counsel.getStory().getWriterNickName(),  counsel.getCounsellorNickname(), false);
         int len = letters.size();
         for(int i = 0; i+1<len; i+=2){
             Letter letter = letters.get(i);

@@ -1,40 +1,26 @@
 <template>
   <div class="feeling-record-background">
-    <span @click="goOneStepBack" class="oneStepBack">
-      <i class="fas fa-arrow-left"></i>
-    </span>
-    <div class="wrapper" @click="move">
-      <div class="calendar-area box fade-in">
-        <calendar></calendar>
-      </div>
-      <div class="diary-area box fade-in">
-        <diary> </diary>
-      </div>
-      <writing-modal v-if="$store.state.modalControl" class="modal">
-        <div v-if="$store.state.diaryModalStatus === 'create'">
-          <create-diary></create-diary>
+    <div class="feeling-container">
+      <span @click="goOneStepBack" class="oneStepBack">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <div class="wrapper" @click="move">
+        <div class="calendar-area box fade-in">
+          <calendar></calendar>
         </div>
-        <div v-else-if="$store.state.diaryModalStatus === 'update'">
-          <update-diary></update-diary>
+        <div class="diary-area box fade-in">
+          <diary> </diary>
         </div>
-      </writing-modal>
+        <writing-modal v-if="$store.state.modalControl" class="modal">
+          <div v-if="$store.state.diaryModalStatus === 'create'">
+            <create-diary></create-diary>
+          </div>
+          <div v-else-if="$store.state.diaryModalStatus === 'update'">
+            <update-diary></update-diary>
+          </div>
+        </writing-modal>
+      </div>
     </div>
-    <!-- 물방울 영역 -->
-    <!-- <div class="bubbles">
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-      <img src="../../assets/image/bubble.png" />
-    </div> -->
   </div>
 </template>
 
@@ -84,12 +70,6 @@ export default {
       this.$router.push({ name: 'Login' });
     }
   },
-  // created() {
-  //   this.$store.dispatch('LOGIN', {
-  //     email: 'najse77@naver.com',
-  //     password: 'lemon1234',
-  //   });
-  // },
 };
 </script>
 
@@ -97,38 +77,24 @@ export default {
 .feeling-record-background {
   height: 100vh;
   width: 100vw;
-  margin: 0;
+  /* margin: 0; */
   padding: 0;
-  /* 그리드 나누기 */
-  /* display: grid; */
-  /* grid-template-columns: repeat(6, 1fr); */
   box-sizing: border-box;
-  /* position: fixed; */
-  /* position: relative; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  position: relative;
+}
+
+.feeling-container {
   background-image: url('../../assets/image/sky.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-/* .back {
-  position: absolute;
-  display: inline-block;
-  z-index: 30;
-}
-
-.back i {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #fff;
-} */
 
 .wrapper {
   width: 27vw;
@@ -136,13 +102,10 @@ export default {
   position: relative;
 }
 
-.calendar-area {
-}
-
 .calendar-area,
 .diary-area {
   position: absolute;
-  top: 0;
+  top: 5vh;
   left: 0;
   width: 100%;
   height: 100%;
@@ -150,11 +113,6 @@ export default {
 }
 
 .diary-area {
-  /* grid-column-start: 4;
-  grid-column-end: 6;
-  align-items: center;
-  justify-content: center;
-  display: flex; */
   opacity: 0;
   z-index: -1;
 }
@@ -233,116 +191,4 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-
-/* .fade-in.one {
-  -webkit-animation-delay: 0.1s;
-  -moz-animation-delay: 0.1s;
-  animation-delay: 0.1s;
-} */
-
-/* .fade-in.two {
-  -webkit-animation-delay: 0.7s;
-  -moz-animation-delay: 0.7s;
-  animation-delay: 0.7s;
-} */
-
-/* 물방울 영역 */
-/* .bubbles img {
-  width: 50px;
-  animation: bubble 7s linear infinite;
-}
-
-.bubbles {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  position: absolute;
-  bottom: -70px;
-}
-
-@keyframes bubble {
-  0% {
-    transform: translateY(0);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  70% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-80vh);
-    opacity: 0;
-  }
-}
-
-.bubbles img:nth-child(1) {
-  animation-delay: 0s;
-  width: 35px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(2) {
-  animation-delay: 3s;
-  width: 33px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(3) {
-  animation-delay: 11s;
-  width: 25px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(4) {
-  animation-delay: 5s;
-  width: 20px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(5) {
-  animation-delay: 8s;
-  width: 25px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(6) {
-  animation-delay: 10s;
-  width: 30px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(7) {
-  animation-delay: 6s;
-  width: 22px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(8) {
-  animation-delay: 1s;
-  width: 10px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(9) {
-  animation-delay: 2s;
-  width: 15px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(10) {
-  animation-delay: 4s;
-  width: 33px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(11) {
-  animation-delay: 3s;
-  width: 22px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(12) {
-  animation-delay: 0.5s;
-  width: 30px;
-  z-index: -1000;
-}
-.bubbles img:nth-child(13) {
-  animation-delay: 9s;
-  width: 28px;
-  z-index: -1000;
-} */
 </style>

@@ -3,6 +3,12 @@ package com.hanmaum.counseling.domain.account.service;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException;
+import com.google.firebase.remoteconfig.Parameter;
+import com.google.firebase.remoteconfig.Template;
+import com.hanmaum.counseling.config.FireBaseConfig;
 import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
@@ -29,6 +35,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +51,13 @@ public class AccountService {
     private final EmailUtil emailUtil;
     private final RedisUtil redisUtil;
 
-    public User saveUser(@Valid SignupDto request){
+    public User saveUser(@Valid SignupDto request) {
+        String signUpEnabled = redisUtil.getData("sign_up_enabled");
+
+        if(signUpEnabled.equals("false")){
+            throw new IllegalStateException("죄송합니다. 현재는 회원가입이 불가능 합니다");
+        }
+
         //이메일 중복 및 인증 여부 체크
         String emailCheck = redisUtil.getData(request.getEmail()+"_"+request.getCode());
         if(emailCheck == null || !emailCheck.equals("T")){
@@ -184,5 +197,19 @@ public class AccountService {
         User user = userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
         user.setNickname(updateNicknameDto.getNickname());
         userRepository.save(user);
+    }
+
+    public Map<String, Object> signupState() {
+        Map<String, Object> result = new HashMap<>();
+        String signUpEnabled = redisUtil.getData("sign_up_enabled");
+        if(signUpEnabled.equals("false")){
+            result.put("message", "죄송합니다. 발표로 인해 현재 회원가입이 불가능합니다");
+            result.put("state", false);
+        }
+        else{
+            result.put("message", "회원가입 가능");
+            result.put("state", true);
+        }
+        return result;
     }
 }
