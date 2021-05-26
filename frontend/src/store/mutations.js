@@ -58,6 +58,9 @@ export default {
   getThisMonthEmoji(state, thisMonthWithEmoji) {
     state.thisMonthWithEmoji = thisMonthWithEmoji;
   },
+  getCheckModalStatus(state, checkModalStatus) {
+    state.checkModalStatus = checkModalStatus;
+  },
 
   //Mail 관련
   setCounselId(state, counselId) {

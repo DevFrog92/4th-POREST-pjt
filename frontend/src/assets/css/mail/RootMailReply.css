@@ -432,6 +432,7 @@ font-weight: bold; */
   background-color: #DCD0AA;
 }
 .envelope .back .letter textarea {
+  white-space: pre-wrap;
   resize: none;
   height: 175px;
   /* font-family: 'Love_son';
