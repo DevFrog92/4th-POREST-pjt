@@ -3,9 +3,6 @@
     <span @click="moveToBack" class="back">
       <i class="fas fa-arrow-left"></i>
     </span>
-    <!-- <div class="backarrow_wrapper">
-      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
-    </div> -->
     <div class="mailbox_main_title">
       <div class="mailbox_name">{{ $store.state.nickname }}의 우체통</div>
       <div class="mailbox_title">
@@ -48,21 +45,44 @@
         </div>
       </div>
     </div>
+    <div class="box-wrapper">
+      <div class="box" @click="goToBoard">
+        <div class="side-1">
+          <div class="side inner-side flap-1"></div>
+          <div class="side inner-side flap-2"></div>
+        </div>
+        <div class="side side-2">
+          <p>편지 모음집<br />바로가기🏃‍♂️</p>
+        </div>
+        <div class="side side-3"></div>
+        <div class="side side-4"></div>
+        <div class="side side-5"></div>
+        <div class="side side-6"></div>
+        <span class="box_papers"></span>
+        <span class="box_papers"></span>
+        <span class="box_papers"></span>
+        <span class="box_papers"></span>
+        <span class="box_papers"></span>
+        <span class="box_papers"></span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-
   mounted() {
     const menu1 = document.querySelector('.postmenu1');
     const menu2 = document.querySelector('.postmenu2');
     const menu3 = document.querySelector('.postmenu3');
-    menu1.addEventListener('mouseenter',()=>{
-      this.$emit
-    })
+    menu1.addEventListener('mouseenter', () => {
+      this.$emit;
+    });
   },
   methods: {
+    goToBoard() {
+      this.$router.push({ name: 'MailBoard' });
+    },
     moveToBack() {
       this.$router.push({ name: 'MainIsland' });
     },

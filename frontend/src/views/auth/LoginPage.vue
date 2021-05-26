@@ -11,7 +11,7 @@
         <div class="container">
           <div class="form">
             <form @submit.prevent>
-              <p class="welcome">Welcome to POREST :)</p>
+              <p class="welcome">POREST에 어서와 :)</p>
               <p class="title">
                 이메일
               </p>
@@ -49,7 +49,7 @@
               >
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
-              <button @click="submitForm" class="button">Login</button>
+              <button @click="submitForm" class="button">입장하기</button>
               <div class="go-to-find-password-container">
                 <span @click="goToFindPassword" class="go-to-find-password"
                   >비밀번호 찾기</span

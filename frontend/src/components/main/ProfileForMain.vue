@@ -13,6 +13,7 @@
               ? images[$store.getters.getUpdateProfileImgFinal - 1]
               : require('../../assets/image/profile.png')
           "
+          class="selectedImg"
           :class="{ basicImg: $store.getters.getUpdateProfileImgFinal == 0 }"
         />
       </span>
@@ -217,6 +218,8 @@ export default {
 }
 .action {
   width: 100%;
+  /* align-items: center; */
+  /* display: flex; */
 }
 
 .details {
@@ -262,7 +265,7 @@ export default {
 }
 
 .images img {
-  width: 2vw;
+  width: 2.2vw;
   margin: 0 0.3vw 0 0.3vw;
   cursor: pointer;
   transition: 0.1s ease;
@@ -279,13 +282,17 @@ export default {
   cursor: pointer;
 }
 
+.selectedImg {
+  width: 2.7vw;
+}
+
 .basicImg {
   border-radius: 50%;
   background: #fff;
+  width: 2.3vw;
 }
 
 .action .profile img {
-  width: 2.3vw;
   cursor: pointer;
   transition: 0.1s ease;
   position: absolute;
@@ -297,7 +304,7 @@ export default {
   top: 12vh;
   padding: 2vh 2vw 2vh 2vw;
   background: #fff;
-  width: 15vw;
+  width: 16vw;
   height: 9vh;
   box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
   border-radius: 15px;

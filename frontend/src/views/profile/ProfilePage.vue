@@ -57,6 +57,8 @@ export default {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  z-index: 5000;
+  position: relative;
 }
 
 .profile-area {
@@ -71,6 +73,7 @@ export default {
 
   border-radius: 25px;
   margin-right: 1.5vw;
+  justify-content: center;
 }
 
 .active-record-area {
@@ -84,10 +87,12 @@ export default {
   backdrop-filter: blur(5px);
 
   border-radius: 25px;
+  /* position: absolute; */
 }
 
 .modal {
-  z-index: 2;
+  z-index: 5;
+  /* position: absolute; */
 }
 
 .oneStepBack {

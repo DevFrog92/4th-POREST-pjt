@@ -151,7 +151,7 @@
 
 
 .aboutporest_info1_1 {
-    margin: 5rem 0 0.5rem 0;
+  margin: 5.5rem 0 0.5rem 0;
   font-size: 5.7rem;
   letter-spacing: 0.5px;
   font-family: 'Do Hyeon', sans-serif;
@@ -168,7 +168,7 @@ font-weight: bold;
 .aboutporest_info3 {
   font-size: 1.3rem;
   letter-spacing: 1px;
-  margin-top: 1.6rem;
+  margin-top: 2rem;
   font-weight: bold;
   /* font-style: italic; */
   font-family: 'GyeonggiBatang';
@@ -176,10 +176,32 @@ font-weight: bold;
 
 }
 
+.land__info {
+  width: 100%;
+  padding: 3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
+.land__info .land__wrapper {
+  width: 20%;
+  height: 10rem;
+  font-weight: bold;
+
+  font-family: 'GyeonggiBatang';
+
+}
+.land__wrapper img {
+  width: 10rem;
+  margin: 0 2rem;
+}
+
 .aboutporest_info3_1 {
   font-size: 1.65rem;
   letter-spacing: 1px;
-  margin-top: 8rem;
+  margin-top: 2rem;
+  /* margin-top: 8rem; */
   line-height: 3.5rem;
   font-weight: bold;
   /*  font-style: italic;*/
@@ -190,7 +212,7 @@ font-weight: bold;
 .aboutporest_info3_2 {
   font-size: 2rem;
   letter-spacing: 1px;
-  margin-top: 8rem;
+  margin-top: 1.5rem;
   line-height: 3rem;
   font-weight: bold;
   /*  font-style: italic;*/
@@ -323,14 +345,23 @@ margin: 0.5rem 0 1.5rem 0 ;
   font-family: 'GyeonggiBatang';
   text-align: center;
   font-weight: bold;
-  color: red;
 
 }
 
 .contactinfo_title{
     font-size: 1.4rem;
+    font-family: 'GyeonggiBatang';
     margin: 9rem 0 4rem 0;
 }
 .aboutcontact img{
     width: 20%;
+}
+
+.gurumi{
+  position: absolute;
+  bottom: 1rem;
+  left: 10rem;
+  width: 10rem;
+  height: 10rem;
+  transform: rotate(15deg);
 }

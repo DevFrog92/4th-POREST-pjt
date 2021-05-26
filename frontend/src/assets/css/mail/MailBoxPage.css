@@ -428,3 +428,136 @@ transform: translateX(30%) rotateZ(-4deg) skewX(1deg);
 pointer-events: none;
 opacity: 1;
 }
+
+
+/* 게시판 바로가기 */
+
+.box-wrapper {
+	position: fixed;
+	bottom: 2rem;
+	right: 2.5rem;
+}
+
+/* box */
+.box {
+  width:80px;
+  height:80px;
+  position:relative;
+  /* margin: 180px auto; */
+	cursor: pointer;
+  transform-style:preserve-3d;
+	transform: rotateX(-20deg);
+}
+.box:hover {
+    animation: spin .4s forwards linear;
+}
+.side {
+  width:80px;
+  height:80px;
+  background: #FFF7EA;
+  /* background: #fff; */
+  border:1px solid #000;
+  position:absolute;
+}
+
+.side-1 {
+  width:80px;
+  height:80px;
+  position:absolute;
+	border-top: 1px solid;
+  transform: rotateX(90deg) translateZ(40px);
+  transform-style:preserve-3d;
+}
+
+.side-2 {
+  transform: translateZ(40px);
+  display: flex;
+	justify-content: center;
+	align-items: center;
+  line-height: 30px;
+  font-size:0.7rem;
+	font-weight: 600;
+  text-align:center;
+}
+
+.side-2 p {
+  font-size: 0.65vw;
+  font-family: 'InfinitySans-BoldA1';
+}
+
+.side-3 {
+  transform: rotateY(90deg) translateZ(40px);
+}
+
+.side-4 {
+  transform: rotateX(-90deg) rotate(180deg) translateZ(40px);
+}
+
+.side-5 {
+  transform: rotateY(180deg) translateZ(40px);
+}
+
+.side-6 {
+  transform: rotateY(-90deg) translateZ(40px);
+}
+.inner-side {
+  transition: .3s all linear;
+}
+
+.flap-1, .flap-2 {
+  width:80px;
+  height:50px; 
+}
+
+.flap-1 {
+  top:30px;
+  transform-origin:0px 50px;
+}
+
+.flap-2 {
+  transform-origin:100px 0px;
+}
+.box:hover .flap-1 {
+  transform: rotateX(-120deg);
+}
+
+.box:hover .flap-2 {
+  transform: rotateX(120deg);
+}
+
+@keyframes spin {
+  to { transform:  rotateX(-20deg) rotateY(60deg); }
+}
+
+.box_papers {
+	position: absolute;
+	display: inline-block;
+	width: 70px;
+	height: 80px;
+	background-color: #fff;
+	transition: 1s all;
+	border: 1px solid rgba(0,0,0,0.8);
+}
+.box_papers:nth-of-type(1) {
+	left: 10px;
+}
+.box_papers:nth-of-type(2) {
+	left: 5px;
+}
+.box_papers:nth-of-type(3) {
+	left: 3px;
+}
+.box_papers:nth-of-type(4) {
+	left: 1px;
+}
+
+.box:hover .box_papers{
+	animation: 1s papers forwards;
+}
+
+@keyframes papers {
+	to {
+		transform: translateY(-120px);
+	}
+}
+
