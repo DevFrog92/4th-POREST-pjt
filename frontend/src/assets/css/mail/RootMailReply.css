@@ -140,7 +140,8 @@
   transform-style: preserve-3d;
   transform-origin: right center;
   transition: all 1s ease;
-  font-family: 'Love_son';
+  font-family: 'Hana_handwriting';
+  /* font-family: 'Love_son'; */
 
   color: #1F1F1F;
 }
@@ -207,7 +208,7 @@
   vertical-align: middle;
 }
 .envelope .front .mailme p {
-  font-weight: bold;
+  /* font-weight: bold; */
  
   margin: 0;
 }
@@ -221,9 +222,11 @@
 
 .mail_reply_title{
 font-size: 43px;
-padding-bottom: 19px;
-font-family: 'Love_son';
-font-weight: bold;
+padding: 2vw;
+line-height: 5vh;
+font-family: 'Hana_handwriting';
+/* font-family: 'Love_son';
+font-weight: bold; */
 }
 
 .envelope .back {
@@ -308,7 +311,7 @@ font-weight: bold;
 }
 .root-mail{
   font-size: 25px;
-  font-weight: 600;
+  /* font-weight: 600; */
   color: black;
   height: 70%;
   overflow-y: scroll;
@@ -317,7 +320,7 @@ font-weight: bold;
 }
 .root-mail p{
   font-size: 25px;
-  font-weight: 600;
+  /* font-weight: 600; */
   color: black;
   height: 70%;
   letter-spacing: 2px;
@@ -337,7 +340,7 @@ font-weight: bold;
 
 
 .btnReply{
-  font-weight: bold;
+  /* font-weight: bold; */
   cursor: pointer;
   border: none;
   padding: 6px 10px 6px 13.2px;
@@ -393,16 +396,18 @@ font-weight: bold;
   outline: none;
 }
 .envelope .back .letter input, .envelope .back .letter textarea {
-  font-family: 'Love_son';
-  font-weight: bold;
-  font-size: 1.2rem;
+  /* font-family: 'Love_son'; */
+  /* font-weight: bold; */
+  font-size: 1.1vw;
+  /* font-size: 1.2rem; */
   color: black;
+  font-family: 'Hana_handwriting';
 }
 .envelope .back .letter input[type='text'] {
   height: 31px;
 }
 .envelope .back .letter input[type='submit'] {
-  font-weight: bold;
+  /* font-weight: bold; */
   cursor: pointer;
   border: none;
   padding: 4px 20px 5px 20px;
@@ -420,8 +425,9 @@ font-weight: bold;
 .envelope .back .letter textarea {
   resize: none;
   height: 175px;
-  font-family: 'Love_son';
-  font-weight: bold;
+  /* font-family: 'Love_son';
+  font-weight: bold; */
+  font-family: 'Hana_handwriting';
 }
 
 .envelope.new {

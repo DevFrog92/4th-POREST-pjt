@@ -301,6 +301,15 @@ export default {
   font-style: normal;
 }
 
+@font-face {
+  /* 하나 손글씨 */
+  font-family: 'Hana_handwriting';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Hana_handwriting.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .nav-detail {
   color: inherit;
   text-decoration: none;
