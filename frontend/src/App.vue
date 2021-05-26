@@ -262,6 +262,15 @@ export default {
   font-style: normal;
 }
 
+
+@font-face {
+    font-family: 'Mujinjang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_08@1.0/Mujinjang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /*--------- 폰트(명언용)----------- */
 @font-face {
   /*경기청년바탕*/
