@@ -34,12 +34,7 @@
                 <div class="category">성</div>
                 <div class="category">자녀육아</div>
               </div>
-              <button
-                type="submit"
-                class="btn btn-sm btn-info"
-                id="buttonAdd"
-                @click.prevent="checkRoomName"
-              >
+              <button type="submit" class="btn btn-sm btn-info" id="buttonAdd" @click.prevent="checkRoomName">
                 개설하기
               </button>
             </form>
@@ -48,14 +43,8 @@
         <div class="rooms-section-right">
           <div v-for="(room, index) in rooms" :key="index">
             <div class="room-card-wrapper">
-              <div @click="moveToCheckIn(room.id, room.name)">
-                {{ room }} 방
-              </div>
-              <span
-                v-if="uid === room.hostID"
-                @click="deleteRoom(room.id, index)"
-                >Delete</span
-              >
+              <div @click="moveToCheckIn(room.id, room.name)">{{ room }} 방</div>
+              <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">Delete</span>
             </div>
           </div>
         </div>
@@ -65,11 +54,11 @@
 </template>
 
 <script>
-import db from '@/db.js';
-import FireBase from 'firebase/app';
-import 'firebase/auth';
+import db from "@/db.js";
+import FireBase from "firebase/app";
+import "firebase/auth";
 export default {
-  name: 'RoomsPage',
+  name: "RoomsPage",
   data() {
     return {
       roomName: null,
@@ -80,7 +69,7 @@ export default {
       capacity: 1,
     };
   },
-  props: ['user'],
+  props: ["user"],
   mounted() {
     if (this.rooms.length == 0) {
       this.loadData();
@@ -88,7 +77,7 @@ export default {
   },
   methods: {
     async checkRoomName() {
-      await this.rooms.forEach(ele => {
+      await this.rooms.forEach((ele) => {
         if (ele.name == this.roomName) {
           this.roomNameCheck = true;
         }
@@ -96,36 +85,36 @@ export default {
       if (!this.roomNameCheck) {
         this.addRoom();
       } else {
-        this.roomName = '';
+        this.roomName = "";
       }
     },
     addRoom() {
       this.addState = true;
-      const docRef = db.collection('users').doc(this.user.uid);
+      const docRef = db.collection("users").doc(this.user.uid);
 
       docRef.set({ name: this.user.uid });
 
       docRef
-        .collection('rooms')
+        .collection("rooms")
         .add({
           name: this.roomName,
           createdAt: FireBase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
-          this.roomName = '';
+          this.roomName = "";
         });
     },
     deleteRoom(roomId, index) {
-      db.collection('users')
+      db.collection("users")
         .doc(this.user.uid)
-        .collection('rooms')
+        .collection("rooms")
         .doc(roomId)
         .delete();
       this.rooms.splice(index, 1);
     },
     moveToCheckIn(roomId, roomNameParams) {
       if (!this.uid) {
-        this.uid = 'none';
+        this.uid = "none";
       }
       this.$router.push({
         path: `/checkin/${this.uid}/${roomId}`,
@@ -133,14 +122,14 @@ export default {
       });
     },
     async loadData() {
-      const dbRef = db.collection('users');
-      await dbRef.get().then(async querySnapshot => {
-        await querySnapshot.forEach(async doc => {
+      const dbRef = db.collection("users");
+      await dbRef.get().then(async (querySnapshot) => {
+        await querySnapshot.forEach(async (doc) => {
           await dbRef
             .doc(doc.id)
-            .collection('rooms')
-            .onSnapshot(async snapShot => {
-              await snapShot.forEach(ele => {
+            .collection("rooms")
+            .onSnapshot(async (snapShot) => {
+              await snapShot.forEach((ele) => {
                 let dataForm = {
                   id: ele.id,
                   hostID: doc.id,
@@ -149,7 +138,7 @@ export default {
                 if (this.rooms.length != 0) {
                   let state = false;
                   for (let i = 0; i < this.rooms.length; i++) {
-                    if (this.rooms[i]['id'] === ele.id) {
+                    if (this.rooms[i]["id"] === ele.id) {
                       state = true;
                     }
                   }
@@ -169,9 +158,9 @@ export default {
   },
   created() {
     let token = this.$store.getters.getAuthToken;
-    if (token == '' || token == null) {
-      alert('로그인이 필요합니다.');
-      this.$router.push({ name: 'Login' });
+    if (token == "" || token == null) {
+      alert("로그인이 필요합니다.");
+      this.$router.push({ name: "Login" });
     }
   },
 };

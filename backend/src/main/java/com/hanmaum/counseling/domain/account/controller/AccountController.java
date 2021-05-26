@@ -2,12 +2,14 @@ package com.hanmaum.counseling.domain.account.controller;
 
 import com.google.api.Http;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException;
 import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.service.AccountService;
 import exception.UserNotFoundException;
 import exception.WrongPasswordException;
 import io.swagger.annotations.Api;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,7 @@ public class AccountController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
+    public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request) throws FirebaseRemoteConfigException {
         User user = accountService.saveUser(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -82,5 +84,8 @@ public class AccountController {
     public ResponseEntity<?> findPassword(@RequestBody FindPasswordDto findPasswordDto) throws MessagingException, FirebaseAuthException {
         return accountService.findPassword(findPasswordDto.getEmail(), findPasswordDto.getNickname());
     }
-
+    @GetMapping("/signupState")
+    public ResponseEntity<?> signupState(){
+        return ResponseEntity.ok(accountService.signupState());
+    }
 }

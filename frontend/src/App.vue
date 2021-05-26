@@ -43,9 +43,9 @@
         </div>
       </div>
     </div>
-    <nav id="nav">
+    <nav id="nav" v-show="$store.state.id !== ''">
       <button class="nav-icon" id="nav-icon"><span></span></button>
-      <ul v-if="$store.state.id" class="nav_ul">
+      <ul class="nav_ul">
         <li @click="goToMain">
           <span class="nav-detail">홈</span>
         </li>
@@ -59,9 +59,9 @@
         <li @click="goToJoy"><span class="nav-detail">쉼터</span></li>
         <li @click="logout" class="nav-detail logout">로그아웃</li>
       </ul>
-      <ul v-else class="nav_ul">
+      <!-- <ul v-else class="nav_ul">
         <li>로그인</li>
-      </ul>
+      </ul> -->
     </nav>
     <router-view
       :user="user"
@@ -287,6 +287,15 @@ export default {
   /*서평원꺾깎체------>서브메인 */
   font-family: 'SLEIGothicTTF';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  /* 하나 손글씨 */
+  font-family: 'Hana_handwriting';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Hana_handwriting.woff')
     format('woff');
   font-weight: normal;
   font-style: normal;

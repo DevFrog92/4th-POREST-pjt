@@ -86,13 +86,13 @@ export default {
 
 .profile-pic img {
   height: 10vh;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .basicImg {
   border: 2px solid #fff;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .personal-info {

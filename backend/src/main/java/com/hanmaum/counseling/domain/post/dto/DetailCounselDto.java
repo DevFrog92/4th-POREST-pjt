@@ -15,11 +15,13 @@ public class DetailCounselDto {
     private String writerNickname;
     private String counsellorNickname;
     private List<LetterReplyDto> detail;
+    private boolean hasAuth;
 
-    public DetailCounselDto(Long counselId,String writerNickname, String counsellorNickname){
+    public DetailCounselDto(Long counselId,String writerNickname, String counsellorNickname, boolean hasAuth){
         detail = new ArrayList<>();
         this.counselId = counselId;
         this.writerNickname = writerNickname;
         this.counsellorNickname = counsellorNickname;
+        this.hasAuth = hasAuth;
     }
 }

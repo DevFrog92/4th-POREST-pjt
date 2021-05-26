@@ -136,7 +136,7 @@ export default {
   /* align-items: center; */
   width: 100%;
   height: 100%;
-  padding: 6vh;
+  padding: 5vh;
 }
 
 .title {
