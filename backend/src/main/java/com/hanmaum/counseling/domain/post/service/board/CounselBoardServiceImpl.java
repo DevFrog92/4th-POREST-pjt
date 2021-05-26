@@ -6,9 +6,12 @@ import com.hanmaum.counseling.domain.post.dto.LetterReplyDto;
 import com.hanmaum.counseling.domain.post.entity.Counsel;
 import com.hanmaum.counseling.domain.post.entity.Letter;
 import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +36,13 @@ public class CounselBoardServiceImpl implements CounselBoardService{
     }
 
     private DetailCounselDto convertToDetailCounselDto(Long counselId, Counsel counsel) {
-        DetailCounselDto result = new DetailCounselDto(counselId, counsel.getStory().getWriterNickName(), counsel.getCounsellorNickname());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean hasAuth = false;
+        if(principal != null){
+            Long userId = ((CustomUserDetails)principal).getId();
+            hasAuth = userId == counsel.getStory().getWriterId();
+        }
+        DetailCounselDto result = new DetailCounselDto(counselId, counsel.getStory().getWriterNickName(), counsel.getCounsellorNickname(), hasAuth);
         List<Letter> letters = counsel.getLetters();
         int len = letters.size();
         for(int i = 0; i+1<len; i+=2){
