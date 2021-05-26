@@ -357,6 +357,7 @@
   font-family: 'Hana_handwriting';
   /* font-family: 'Love_son'; */
   font-size: 20px;
+  white-space: pre-wrap;
 }
 
 .envelope .back .letter input[type='text'] {

@@ -106,7 +106,7 @@ export default {
     async createDiary() {
       if (this.checkForm) {
         try {
-          this.conversion();
+          // this.conversion();
           await createEmotion({
             content: this.content,
             feeling: this.$store.state.emotionIndex,
@@ -118,7 +118,7 @@ export default {
             imageUrl: this.$store.state.selectedSticker,
           });
           this.loadDiaryCalendar();
-          alert('생성이 완료됐습니다.');
+          // alert('생성이 완료됐습니다.');
           this.$store.commit('getModalStatus', false);
         } catch (error) {
           console.log(error);
@@ -138,9 +138,10 @@ export default {
           });
           this.loadDiaryDetail(this.$store.state.targetDateId);
           this.loadDiaryCalendar();
-          alert('수정이 완료되었습니다.');
+          // alert('수정이 완료되었습니다.');
           this.$store.commit('getModalStatus', false);
           this.$store.commit('getCalendarRefreshStatus', true);
+          // this.$store.commit('getCheckModalStatus', true);
         } catch (error) {
           console.log(error);
         }
@@ -157,7 +158,7 @@ export default {
         this.$store.commit('getSelectedSticker', '');
         this.$store.commit('getEmotionIndex', 0);
         this.$store.commit('getStickerIndex', 0);
-        alert('삭제가 완료되었습니다.');
+        // alert('삭제가 완료되었습니다.');
         this.$store.commit('getModalStatus', false);
       } catch (error) {
         console.log(error);
@@ -277,6 +278,7 @@ export default {
 }
 
 .writing-container textarea {
+  white-space: pre-wrap;
   background: #fffcf5;
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
   border: none;
@@ -355,5 +357,9 @@ export default {
 }
 .attribute_flatticon a:visited {
   color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  z-index: 3;
 }
 </style>
