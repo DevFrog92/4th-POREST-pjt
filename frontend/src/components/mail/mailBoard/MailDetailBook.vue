@@ -20,6 +20,9 @@
     <div class="page-left">
       <span>{{ countCurrentPage }} / {{ pages }}</span>
     </div>
+    <span class="delete" v-if="showDelete === true">
+      <button @click="deleteDetail">삭제하기</button>
+    </span>
     <!-- </div> -->
     <!-- Book -->
     <!-- <div id="book" class="book">
@@ -72,6 +75,7 @@ export default {
       number: 0,
       writer: '',
       counsellor: '',
+      showDelete: Boolean,
     };
   },
   created() {
@@ -204,6 +208,7 @@ export default {
       try {
         let { data } = await getBoardDetail(id);
         this.detailData = data;
+        this.showDelete = data.hasAuth;
         this.title = this.detailData['detail'][0]['letter']['detail']['title'];
         this.pages = Number(data['detail'].length);
         this.writer = this.detailData['writerNickname'];
@@ -211,6 +216,19 @@ export default {
         this.getDetails();
       } catch (error) {
         console.log(error);
+      }
+    },
+    async deleteDetail() {
+      const id = this.$store.state.pageNumbers;
+      if (this.showDelete === true) {
+        try {
+          await updateDetailStatus(id);
+          alert('사연이 삭제됐습니다.');
+          this.$store.commit('getBoardModalStatus', false);
+          location.reload();
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
   },
@@ -282,7 +300,7 @@ export default {
 }
 
 .left-title {
-  font-size: 1.4vw;
+  font-size: 1.3vw;
   margin-bottom: 2vh;
   line-height: 4vh;
   font-family: 'InfinitySans-BoldA1';
@@ -291,22 +309,21 @@ export default {
 
 .left-writer {
   text-align: end;
-  font-family: 'Love_son';
-  font-weight: bold;
-  font-size: 1vw;
+  font-family: 'Hana_handwriting';
+  font-size: 1.1vw;
   color: #424242;
 }
 
 .right-writer {
   text-align: end;
-  font-family: 'Love_son';
-  font-weight: bold;
+  font-family: 'Hana_handwriting';
+  font-size: 1.1vw;
   font-size: 1vw;
   color: #424242;
 }
 
 .right-title {
-  font-size: 1.4vw;
+  font-size: 1.3vw;
   /* text-align: center; */
   margin-bottom: 2vh;
   line-height: 4vh;
@@ -315,17 +332,19 @@ export default {
 }
 
 .left-content {
-  font-size: 1.2vw;
-  line-height: 4.5vh;
+  font-size: 1.5vw;
+  line-height: 4vh;
   margin-bottom: 3vh;
-  font-family: 'NanumSquare', sans-serif;
+  font-family: 'Hana_handwriting';
+  color: #424242;
 }
 
 .right-content {
-  font-size: 1.2vw;
-  line-height: 4.5vh;
+  font-size: 1.5vw;
+  line-height: 4vh;
   margin-bottom: 3vh;
-  font-family: 'NanumSquare', sans-serif;
+  font-family: 'Hana_handwriting';
+  color: #424242;
 }
 
 .page-left {
@@ -352,6 +371,28 @@ export default {
 
 .buttons i:hover {
   color: #35ae6d;
+}
+
+.delete {
+  display: flex;
+}
+
+.delete button {
+  border-radius: 5px;
+  margin-top: -3vh;
+  margin-left: 2vw;
+  width: 5vw;
+  height: 3.5vh;
+  background: blanchedalmond;
+  border: solid 1px gray;
+  cursor: pointer;
+  font-size: 0.8vw;
+  font-weight: bold;
+}
+
+.delete button:hover {
+  background: gray;
+  color: #fff;
 }
 
 /* Book */
