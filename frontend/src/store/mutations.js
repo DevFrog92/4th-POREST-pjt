@@ -70,6 +70,14 @@ export default {
     state.allLetters = allLetters;
   },
 
+  // mail-board
+  getBoardModalStatus(state, openBoardModal) {
+    state.openBoardModal = openBoardModal;
+  },
+  getPageNumbers(state, pageNumbers) {
+    state.pageNumbers = pageNumbers;
+  },
+
   // 프로필
   setModalProfile(state, modalProfileSetting) {
     state.modalProfileSetting = modalProfileSetting;

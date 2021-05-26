@@ -248,7 +248,7 @@ export default {
 }
 
 .emotion {
-  width: 1.6vw;
+  width: 2.6vw;
   margin-left: 0.5vw;
 }
 

@@ -132,6 +132,11 @@ const routes = [
     name: 'BanReport',
     component: () => import('@/views/admin/BanReportPage.vue'),
   },
+  {
+    path: '/mail/board',
+    name: 'MailBoard',
+    component: () => import('@/views/mailbox/MailBoardPage.vue'),
+  },
 ];
 
 const router = new VueRouter({

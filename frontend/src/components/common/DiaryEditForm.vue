@@ -128,7 +128,6 @@ export default {
       }
     },
     async updateDiary() {
-      // this.checkUpdateForm();
       if (this.checkForm) {
         try {
           const id = this.$store.state.targetDateId;
@@ -147,18 +146,6 @@ export default {
         }
       } else {
         alert('모든 항목을 입력해주세요');
-      }
-    },
-    checkUpdateForm() {
-      if (this.$store.state.emotionIndex === 0) {
-        this.feeling = this.$store.getters.getUpdateFeeling;
-      } else {
-        this.feeling = this.$store.state.targetDateDetail['feeling'];
-      }
-      if (this.$store.state.selectedSticker === '') {
-        this.imageUrl = this.$store.getters.getUpdateEmotion;
-      } else {
-        this.imageUrl = this.$store.state.targetDateDetail['imageUrl'];
       }
     },
     async deleteDiary() {
