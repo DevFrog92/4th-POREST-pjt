@@ -7,6 +7,7 @@
       <mail-detail-book></mail-detail-book>
     </detail-modal>
     <div class="container">
+      <p class="title">편지 모음집</p>
       <!-- <div class="book-board" @click="openModal">
         <div class="cover"></div>
         <h2>사연 <span>제목</span></h2>
@@ -36,7 +37,7 @@ export default {
   data() {
     return {
       pageNumber: 0,
-      pageSize: 7,
+      pageSize: 8,
       boardList: [],
     };
   },
@@ -56,7 +57,6 @@ export default {
       try {
         let { data } = await getBoardList(this.pageNumber, this.pageSize);
         this.boardList = data;
-        console.log(this.boardList);
       } catch (error) {
         console.log(error);
       }
@@ -77,13 +77,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5000;
+  z-index: 50;
   position: relative;
 }
 
 .container {
-  /* background: chartreuse; */
-  width: 70%;
+  width: 65%;
   height: 80%;
   padding: 3vh 3vw 3vh 3vw;
   background: rgba(255, 255, 255, 0.1);
@@ -94,12 +93,22 @@ export default {
   border-radius: 25px;
 }
 
+.title {
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 2vw;
+  margin-bottom: 5vh;
+  margin-top: 1vh;
+  font-family: 'InfinitySans-BoldA1';
+}
+
 .wrapper {
   float: left;
 }
 
 .wrapper .box {
-  width: 12vw;
+  width: 13vw;
   height: 23vh;
   border-radius: 15px;
   transition: transform 500ms ease-out;
@@ -119,10 +128,10 @@ export default {
 }
 
 .box p {
-  line-height: 1.9;
+  line-height: 3vh;
   color: #fff;
   font-family: 'Love_son';
-  font-size: 20px;
+  font-size: 1.3vw;
 }
 
 .wrapper .box:before {

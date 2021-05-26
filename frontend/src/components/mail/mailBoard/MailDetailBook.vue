@@ -1,17 +1,24 @@
 <template>
   <div class="body-detail">
-    <button @click="goBefore">before</button>
-    <button @click="goAfter">after</button>
     <!-- <div v-for="n in pages" :key="n"> -->
     <div class="book-page">
       <div class="left">
-        <p>{{ leftTitle }}</p>
-        <p>{{ leftContent }}</p>
+        <p class="left-title">{{ leftTitle }}</p>
+        <p class="left-content">{{ leftContent }}</p>
+        <p class="left-writer">by. {{ writer }}</p>
       </div>
       <div class="right">
-        <p>{{ rightTitle }}</p>
-        <p>{{ rightContent }}</p>
+        <p class="right-title">{{ rightTitle }}</p>
+        <p class="right-content">{{ rightContent }}</p>
+        <p class="right-writer">by. {{ counsellor }}</p>
       </div>
+    </div>
+    <div class="buttons">
+      <span @click="goBefore"><i class="fas fa-arrow-circle-left"></i></span>
+      <span @click="goAfter"><i class="fas fa-arrow-circle-right"></i></span>
+    </div>
+    <div class="page-left">
+      <span>{{ countCurrentPage }} / {{ pages }}</span>
     </div>
     <!-- </div> -->
     <!-- Book -->
@@ -63,6 +70,8 @@ export default {
       rightTitle: '',
       rightContent: '',
       number: 0,
+      writer: '',
+      counsellor: '',
     };
   },
   created() {
@@ -74,6 +83,11 @@ export default {
   // mounted() {
   //   this.enterPosition();
   // },
+  computed: {
+    countCurrentPage() {
+      return this.number + 1;
+    },
+  },
   methods: {
     getDetails() {
       this.leftTitle = this.detailData['detail'][this.number]['letter'][
@@ -192,7 +206,8 @@ export default {
         this.detailData = data;
         this.title = this.detailData['detail'][0]['letter']['detail']['title'];
         this.pages = Number(data['detail'].length);
-        console.log('22', data);
+        this.writer = this.detailData['writerNickname'];
+        this.counsellor = this.detailData['counsellorNickname'];
         this.getDetails();
       } catch (error) {
         console.log(error);
@@ -203,6 +218,13 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'NanumSquare', sans-serif !important;
+  src: url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 * {
   margin: 0;
   padding: 0;
@@ -221,18 +243,115 @@ export default {
   width: 100%;
   height: 100%;
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 2vw;
 }
 
 .left {
-  width: 30%;
-  height: 50vh;
-  background-color: powderblue;
+  height: 67vh;
+  background-color: #fffbf4;
+  /* background-color: powderblue; */
+  grid-column-start: 1;
+  grid-column-end: 2;
+  margin-right: 1vw;
+  padding: 1.5vw;
+  overflow-y: scroll;
+  border-radius: 8px;
 }
 
 .right {
-  width: 30%;
-  height: 100%;
+  height: 67vh;
   background-color: blanchedalmond;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  margin-left: 1vw;
+  padding: 1.5vw;
+  overflow-y: scroll;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+::-webkit-scrollbar-corner {
+}
+::-webkit-scrollbar-thumb {
+  background-color: #35ae6d;
+  border-radius: 6px;
+  opacity: 0.1;
+}
+
+.left-title {
+  font-size: 1.4vw;
+  margin-bottom: 2vh;
+  line-height: 4vh;
+  font-family: 'InfinitySans-BoldA1';
+  color: #424242;
+}
+
+.left-writer {
+  text-align: end;
+  font-family: 'Love_son';
+  font-weight: bold;
+  font-size: 1vw;
+  color: #424242;
+}
+
+.right-writer {
+  text-align: end;
+  font-family: 'Love_son';
+  font-weight: bold;
+  font-size: 1vw;
+  color: #424242;
+}
+
+.right-title {
+  font-size: 1.4vw;
+  /* text-align: center; */
+  margin-bottom: 2vh;
+  line-height: 4vh;
+  font-family: 'InfinitySans-BoldA1';
+  color: #424242;
+}
+
+.left-content {
+  font-size: 1.2vw;
+  line-height: 4.5vh;
+  margin-bottom: 3vh;
+  font-family: 'NanumSquare', sans-serif;
+}
+
+.right-content {
+  font-size: 1.2vw;
+  line-height: 4.5vh;
+  margin-bottom: 3vh;
+  font-family: 'NanumSquare', sans-serif;
+}
+
+.page-left {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 2vw;
+  margin-top: -2.3vh;
+  font-family: 'InfinitySans-BoldA1';
+}
+
+.buttons {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.buttons i {
+  font-size: 1.5vw;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  color: gray;
+  cursor: pointer;
+}
+
+.buttons i:hover {
+  color: #35ae6d;
 }
 
 /* Book */
