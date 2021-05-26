@@ -8,15 +8,18 @@
               ? images[$store.getters.getUpdateProfileImg - 1]
               : require('../../assets/image/profile.png')
           "
+          :class="{ basicImg: $store.getters.getUpdateProfileImg == 0 }"
         />
       </div>
     </div>
     <div class="images">
-      <img
-        src="../../assets/image/profile.png"
-        @click="getFeeling(0)"
-        class="img0 basic"
-      />
+      <!-- <div class="basic">
+        <img
+          src="../../assets/image/profile.png"
+          @click="getFeeling(0)"
+          class="img0"
+        />
+      </div> -->
       <img
         src="../../assets/image/feeling/5.png"
         @click="getFeeling(5)"
@@ -106,30 +109,41 @@ export default {
   margin-top: 2vh;
 }
 
-.menu-item img {
-  height: 10vh;
-  background-color: #fff;
-  border-radius: 50%;
+.basicImg {
+  /* border: 2px solid #fff; */
+  background: #fff;
   object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4);
 }
+
+.menu-item img {
+  height: 9vh;
+}
+
+/* .basic {
+  background: #fff;
+  border-radius: 50%;
+  width: 2.5vw;
+  height: 2.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
 
 .images {
   display: flex;
   justify-content: center;
   margin-bottom: 6vh;
+  height: 3.6vh;
 }
 
 .images img {
-  width: 2.3vw;
-  margin: 0 0.45vw 0 0.45vw;
+  width: 2.7vw;
+  margin: 0 0.5vw 0 0.5vw;
   cursor: pointer;
   transition: 0.1s ease;
   filter: opacity(0.7) drop-shadow(0 0 0 white);
-}
-
-.basic {
-  background: #fff;
-  border-radius: 50%;
 }
 
 .images img:hover {
