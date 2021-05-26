@@ -6,7 +6,7 @@
     <div class="envelope open">
       <div class="front">
         <div class="stamp">
-          <img src="../../assets/image/sticker/10.png" alt="" />
+          <img src="../../assets/image/gurumi.png" alt="" />
         </div>
         <div class="mailme">
           <p>당신의 고민을 담은 편지</p>
