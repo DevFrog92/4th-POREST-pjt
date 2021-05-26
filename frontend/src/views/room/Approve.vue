@@ -158,11 +158,11 @@ export default {
       console.log('join');
       const form = document.querySelector('.approve-form');
       if (this.roomPublic) {
-        // form.action = 'https://live.porest.kr/';
-        form.action = 'http://localhost:3000/';
+        form.action = 'https://live.porest.kr/';
+        // form.action = 'http://localhost:3000/';
       } else {
-        // form.action = 'https://live.porest.kr/ar';
-        form.action = 'http://localhost:3000/ar';
+        form.action = 'https://live.porest.kr/ar';
+        // form.action = 'http://localhost:3000/ar';
       }
       form.method = 'POST';
       form.target = 'pop';
