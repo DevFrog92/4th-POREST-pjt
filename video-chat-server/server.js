@@ -49,11 +49,6 @@ app.post("/userId",(req,res) =>{
   res.status(200).send(JSON.stringify({userId:userId}));
 })
 
-///test
-// app.get("/", (req, res) => {
-//   console.log(req.query.data)
-//   res.redirect("/video_chat");
-// });
 
 
 // app.get("/:room", (req, res) => {
