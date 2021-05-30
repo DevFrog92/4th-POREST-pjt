@@ -41,6 +41,7 @@
 
       <!-- 일기 내용 -->
       <div class="diary-detail" v-if="$store.state.targetDateDetail">
+        <!-- <p>{{ $store.state.targetDateDetail['content'] }}</p> -->
         <p v-html="$store.state.targetDateDetail['content']"></p>
       </div>
       <div
@@ -279,6 +280,7 @@ export default {
 }
 
 .diary-detail {
+  white-space: pre;
   margin: 4.1vh 0 1.38vh 0;
   padding: 0 2vw 0 2vw;
   height: 18vh;

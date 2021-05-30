@@ -30,6 +30,7 @@ export default {
   refreshCalendar: false,
   thisMonth: [],
   thisMonthWithEmoji: [],
+  checkModalStatus: false,
 
   //MyreceivedMail에서 사용
   //Mail관련

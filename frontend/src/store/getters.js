@@ -24,4 +24,7 @@ export default {
   getUpdateProfileImgFinal(state) {
     return state.profileImgToShow;
   },
+  getCheckModalState(state) {
+    return state.checkModalStatus;
+  },
 };
