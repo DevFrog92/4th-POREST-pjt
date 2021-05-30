@@ -2,9 +2,9 @@ from flask import Flask, request
 from flask_cors import CORS
 from konlpy.tag import Komoran
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
-import joblib
-import pickle
+import dill
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +15,7 @@ emotionDict = {'greetings' : ['안녕', '오랜만이', '반가워', '처음뵙�
                 'farewells' : ['잘 있어 또 올게', '구름아 나 갈게', '구름아 다음에 봐', '나중에 봐', "구름아 또 보자"],
                 'troubles' : ['말할 사람이 없어','아무도 내 말을 안 들어줘','들어 줄 사람이 없어','혼자 있고 싶어',]}
 
+tags = {"NNG", 'NNP', 'MAG', 'VV', 'VA', 'VX', 'VCN', 'VCP'}
 def tokenize(text):
     temp = tokenizer.pos(text)
     result = []
@@ -23,10 +24,11 @@ def tokenize(text):
             result.append(word)
     return result
 
-model = joblib.load('model.pkl')
-tf1 = pickle.load(open('tfidf.pkl', 'rb'))
-vect = CountVectorizer(tokenizer=tokenize, vocabulary = tf1.vocabulary_)
-tags = {"NNG", 'NNP', 'MAG', 'VV', 'VA', 'VX', 'VCN', 'VCP'}
+with open('model.pkl', 'rb') as f:
+    model = dill.load(f)
+with open('vocab.pkl', 'rb') as f:
+    vocab = dill.load(f)
+vect = CountVectorizer(tokenizer=tokenize, vocabulary = vocab.vocabulary_)
 feats = ['Angry','Disgust', 'Fear', 'Happiness','Neutral','Sadness','Surprise']
 
 def jaccard(text_a, text_b):
@@ -49,7 +51,7 @@ def extractEmotion(text):
                 emotion = em
     return emotion, maxValue
 
-@app.route('/emotions', methods=['POST'])
+@app.route('/ml/emotions', methods=['POST'])
 def emotion():
     ret = {'emotion': 'none', 'value': 0.0}
     text = request.get_json()['text']
@@ -73,4 +75,4 @@ def emotion():
     return ret
 
 if __name__ == "__main__":
-    app.run(port=8082, threaded = True)
+    app.run(host='0.0.0.0', port=8082, threaded = True)

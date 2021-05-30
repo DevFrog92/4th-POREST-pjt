@@ -1,4 +1,5 @@
 FROM ubuntu:latest
+ARG DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 ENV TZ=Asia/Seoul
 RUN apt-get update && \
@@ -17,13 +18,13 @@ RUN apt-get clean && \
 # timezone
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY . /app
 WORKDIR /app
+COPY . /app
 
 RUN pip install -r requirements.txt
 
 EXPOSE 8082
 
-ENTRYPOINT ["flask"]
+ENTRYPOINT ["python"]
 
-CMD ["run", "--host". "0.0.0.0"]
+CMD ["app.py"]
