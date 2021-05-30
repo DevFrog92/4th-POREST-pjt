@@ -1,0 +1,7 @@
+JPype1
+konlpy
+flask
+flask_cors
+scikit-learn
+numpy
+joblib
