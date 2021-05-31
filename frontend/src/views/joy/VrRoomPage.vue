@@ -81,6 +81,12 @@
         </div>
       </div>
     </section>
+    <div class="video__btn" @click="videoPlay">🎞</div>
+    <div class="video__popup__vr" v-show="vrVideoState">
+      <div class="video__vr__wrapper">
+        <video class="VR__video" src="../../assets/music/vr.mp4"></video>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -129,6 +135,7 @@ export default {
         ['#e0c3fc', '#8ec5fc'],
       ],
       vrState: true,
+      vrVideoState: false,
     };
   },
   mounted() {},
@@ -140,6 +147,11 @@ export default {
     }
   },
   methods: {
+    videoPlay() {
+      const videoControl = document.querySelector('.VR__video');
+      videoControl.play();
+      this.vrVideoState = !this.vrVideoState;
+    },
     moveToDetail() {
       this.$router.push({ name: 'About' });
     },
