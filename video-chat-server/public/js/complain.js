@@ -183,7 +183,7 @@ const processEmotion = (emotion) => {
       sayHello();
       audioPlay(13)
     },200)
-  }else if(emotion === 'Sadness' || emotion === 'Angry'){
+  }else if(emotion === 'Sadness' || emotion === 'Angry' || emotion === 'Fear'){
     let temp = [1, 2, 10, 15, 17, 25];
     defaultFace();
     setTimeout(()=>{
@@ -278,8 +278,7 @@ const processEmotion = (emotion) => {
         }
       },2500)
     },7700);
-  }
-  else if(answer > 1){
+  }else if(emotion === 'Neutral' && answer > 1){
     defaultFace()
     answer++;
     setTimeout(()=>{
@@ -309,8 +308,8 @@ recognition.addEventListener('result',(e)=>{
     xhr.onreadystatechange = () => {
       if(xhr.readyState === xhr.DONE){
         if(xhr.status == 200){
-          res = xhr.response;
-          data = JSON.parse(xhr.response)
+          const res = xhr.response;
+          const data = JSON.parse(xhr.response)
           console.log(text, data)
           processEmotion(data.emotion);
         }
