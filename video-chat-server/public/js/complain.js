@@ -326,7 +326,7 @@ recognition.addEventListener('result',(e)=>{
 })
 
 recognition.addEventListener('end',()=>{
-  if(sadState >= 20){
+  if(sadState >= 60){
     sadState = 0;
     varEmotion['sad'] = 0;
     defaultFace()
