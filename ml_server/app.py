@@ -58,7 +58,7 @@ def emotion():
 
     emotion, v = extractEmotion(text)
 
-    if(emotion != 'none' and v >= 0.2):
+    if(emotion != 'none' and v > 0.2):
         ret['emotion'] = emotion
         ret['value'] = v
         return ret
