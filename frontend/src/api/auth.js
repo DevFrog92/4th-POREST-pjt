@@ -1,4 +1,4 @@
-import { instance } from "@/api";
+import { instance, instanceAuth } from "@/api";
 
 const signupUser = (userData) =>
   instance
@@ -7,7 +7,10 @@ const signupUser = (userData) =>
       return { status: true, message: "이메일을 확인해주세요" };
     })
     .catch((error) => {
-      return { status: false, message: "다시 시도해 주세요" };
+      return {
+        status: false,
+        message: error.response.data.message == null ? "다시 시도해 주세요" : error.response.data.message,
+      };
     });
 
 const loginUser = (userData) =>
@@ -38,7 +41,7 @@ const findPassword = (userData) =>
       return { status: true, message: "이메일을 확인해주세요" };
     })
     .catch((error) => {
-      return { status: false, message: err.response.data.message };
+      return { status: false, message: error.response.data.message };
     });
 
 //인증 코드 이메일 전송
@@ -61,4 +64,32 @@ const verifyCheck = (userData) =>
     .catch((error) => {
       return { status: false, message: error.response.data.message };
     });
-export { signupUser, loginUser, emailCheck, findPassword, emailVerify, verifyCheck };
+
+const verificationTemperature = (userData) =>
+  instanceAuth
+    .get(`/temperature`, { params: { temp: userData.temperature } })
+    .then((res) => {
+      return { status: true, message: "", data: res.data };
+    })
+    .catch((error) => {
+      return { status: false, message: error.response.data.message };
+    });
+const signupState = () =>
+  instance
+    .get("/signupState")
+    .then((res) => {
+      return { status: true, message: res.data.message, data: res.data.state };
+    })
+    .catch((error) => {
+      return { status: false, message: error.response.data.message };
+    });
+export {
+  signupUser,
+  loginUser,
+  emailCheck,
+  findPassword,
+  emailVerify,
+  verifyCheck,
+  verificationTemperature,
+  signupState,
+};

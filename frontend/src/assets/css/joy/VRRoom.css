@@ -11,7 +11,122 @@
 
 }
 
+.about__modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+}
 
+.modal__wrapper {
+  width: 500px;
+  height: 500px;
+  padding: 1rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
+.modal__header {
+  font-size: 2rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.modal__header img {
+  margin-left: 2rem;
+  width: 3rem;
+  height: 3rem;
+}
+.modal__content{
+  padding: 1rem;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  line-height:1.4rem;
+}
+
+.modal__img {
+  display: flex;
+  margin: 1.5rem auto;
+  width: 13rem;
+  height: 8rem;
+}
+
+.modal__img img {
+  width: 100%;
+  height: 100%;
+}
+
+.modal__footer {
+  margin-top: 3rem;
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-around ;
+  align-items: center;
+}
+
+.go__to__about, .go__to__exit {
+  width: 5rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all .7s;
+}
+
+.go__to__about:hover, .go__to__exit:hover {
+  border-radius: 1rem;
+  /* padding: 1rem; */
+  background-color: #fcb69f;
+}
+
+.donation {
+  opacity: 0;
+  position: absolute;
+  top: -4.5rem;
+  width: 4rem;
+  height: 4rem;
+  transform: translate(0,3rem);
+  transition: all .7s;
+}
+
+.go__to__about:hover .donation {
+  opacity: 1;
+  transform: translate(0,0rem);
+  
+}
+.attribute_flatticon {
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+  color: rgba(0,0,0,0.1);
+  font-size: 1px;
+}
+
+.attribute_flatticon a {
+  color: rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+.attribute_flatticon a:visited {
+  color: rgba(0,0,0,0.1);
+}
 .before {
   position: absolute;
   top: 1rem;
@@ -33,8 +148,8 @@
   align-items: flex-end;
 }
 .healing__VR {
-  width: 92%;
-  height: 97%;
+  width: 95%;
+  height: 97.5%;
   border-radius: 1rem;
 }
 .video__list__Wrapper {
@@ -178,4 +293,37 @@
     bottom: 1rem;
     
   }
+}
+
+.video__btn {
+  opacity: 0.7;
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+  position: absolute;
+  bottom: 3rem;
+  left: 0.7rem;
+  z-index: 100;
+  cursor: pointer;
+}
+.video__popup__vr {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s;
+}
+
+.video__vr__wrapper {
+  width: 60%;
+  height: 60%;
+}
+
+.video__vr__wrapper video {
+  width: 100%;
+  height: 100%;
 }

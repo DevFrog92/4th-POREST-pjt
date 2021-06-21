@@ -1,5 +1,9 @@
 <template>
-  <div id="app">
+  <div id="app" class="app__main">
+    <div class="main__background">
+      <div class="day"></div>
+      <div class="night"></div>
+    </div>
     <audio id="audio-player1" loop="false">
       <source src="../src/assets/audio/introvoice.mp3" type="audio/mpeg" />
       <p class="sr-only">
@@ -39,9 +43,9 @@
         </div>
       </div>
     </div>
-    <nav id="nav">
+    <nav id="nav" v-show="$store.state.id !== ''">
       <button class="nav-icon" id="nav-icon"><span></span></button>
-      <ul v-if="$store.state.id" class="nav_ul">
+      <ul class="nav_ul">
         <li @click="goToMain">
           <span class="nav-detail">홈</span>
         </li>
@@ -53,11 +57,11 @@
         </li>
         <li @click="goToVideoChat"><span class="nav-detail">마음나눔</span></li>
         <li @click="goToJoy"><span class="nav-detail">쉼터</span></li>
-        <li @click="logout" class="nav-detail">로그아웃</li>
+        <li @click="logout" class="nav-detail logout">로그아웃</li>
       </ul>
-      <ul v-else class="nav_ul">
+      <!-- <ul v-else class="nav_ul">
         <li>로그인</li>
-      </ul>
+      </ul> -->
     </nav>
     <router-view
       :user="user"
@@ -65,6 +69,9 @@
       @introPlay="introPlay"
       @controlMusic="controlMusic"
       @skip="skip"
+      @dayoff="dayoff"
+      @lowvolumn="lowvolumn"
+      @stopBgm="stopBgm"
     />
   </div>
 </template>
@@ -74,6 +81,8 @@ import db from '@/db.js';
 import FireBase from 'firebase/app';
 import 'firebase/auth';
 import { init } from '@/assets/js/common/Nav.js';
+import { timeSet } from '@/assets/js/main/MainIslandPage.js';
+
 export default {
   name: 'App',
   data() {
@@ -85,6 +94,14 @@ export default {
     };
   },
   methods: {
+    lowvolumn() {
+      const audioPlayer = document.querySelector('#audio-player');
+      audioPlayer.volume = 0.02;
+    },
+    dayoff() {
+      const background = document.querySelector('.main__background');
+      background.classList.toggle('dayoff');
+    },
     skip() {
       const audioPlayer1 = document.querySelector('#audio-player1');
       audioPlayer1.pause();
@@ -128,14 +145,33 @@ export default {
       nav.classList.remove('active');
       this.$router.push('/joy');
     },
+    stopBgm() {
+      console.log('stop');
+      const audioPlayer = document.querySelector('#audio-player');
+      const audioContainer = document.querySelector('#music-container');
+      audioContainer.classList.add('music-player--disabled');
+      audioPlayer.pause();
+    },
+    playBgm() {
+      const audioPlayer = document.querySelector('#audio-player');
+      const audioContainer = document.querySelector('#music-container');
+      audioContainer.classList.remove('music-player--disabled');
+      audioPlayer.volume = 0.2;
+      audioPlayer.play();
+    },
     controlMusic(playState) {
       const audioPlayer = document.querySelector('#audio-player');
+      audioPlayer.volume = 0.2;
       const audioContainer = document.querySelector('#music-container');
       if (playState != 'play') {
         audioContainer.classList.add('music-player--disabled');
         audioPlayer.pause();
       } else {
         audioPlayer.play();
+        const url = this.$router.history.current.name;
+        if (url != 'Intro' && url != 'Login') {
+          this.lowvolumn();
+        }
         audioContainer.classList.remove('music-player--disabled');
       }
     },
@@ -151,9 +187,7 @@ export default {
   },
   mounted() {
     init();
-    const audioPlayer = document.querySelector('#audio-player');
-    const audioPlayer1 = document.querySelector('#audio-player1');
-
+    timeSet();
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
         this.loginState = !this.loginState;
@@ -164,28 +198,54 @@ export default {
       }
     });
   },
-  created() {
-    // let token = this.$store.getters.getAuthToken;
-    // if (token == '' || token == null) {
-    //   this.$router.push({ name: 'Login' });
-    // } else {
-    //   this.loginState = true;
-    // }
-  },
+  created() {},
 };
 </script>
 
 <style src="@/assets/css/common/reset.css"></style>
 <style>
-.logout {
-  position: fixed;
-  width: 3rem;
-  height: 3rem;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 200;
-  color: white;
+#app {
+  position: relative;
+  overflow: hidden;
 }
+.main__background {
+  position: absolute;
+  top: -44vh;
+  left: -50vw;
+  width: 200vw;
+  height: 290vh;
+  border-radius: 100%;
+  transition: all 1.7s ease-in-out;
+}
+
+.day {
+  border-radius: 100% 100% 0 0;
+  width: 100%;
+  height: 145vh;
+  background-image: url('./assets/image/sky.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.night {
+  border-radius: 0 0 100% 100%;
+  width: 100%;
+  height: 145vh;
+  background-image: radial-gradient(
+    ellipse at bottom,
+    #1b2735 0%,
+    #090a0f 100%
+  );
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.dayoff {
+  transform: rotateZ(180deg);
+}
+
 @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
@@ -201,6 +261,15 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+
+
+@font-face {
+    font-family: 'Mujinjang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_08@1.0/Mujinjang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 /*--------- 폰트(명언용)----------- */
 @font-face {
@@ -227,6 +296,15 @@ export default {
   /*서평원꺾깎체------>서브메인 */
   font-family: 'SLEIGothicTTF';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  /* 하나 손글씨 */
+  font-family: 'Hana_handwriting';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Hana_handwriting.woff')
     format('woff');
   font-weight: normal;
   font-style: normal;
@@ -435,6 +513,6 @@ nav.active ul {
 }
 
 .logout {
-  color: red;
+  color: salmon;
 }
 </style>

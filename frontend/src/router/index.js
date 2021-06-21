@@ -35,6 +35,11 @@ const routes = [
     component: () => import('@/views/auth/FindPasswordPage.vue'),
   },
   {
+    path: '/about',
+    name: 'About',
+    component: () => import('@/views/main/AboutPage.vue'),
+  },
+  {
     path: '/mailbox',
     name: 'Mailbox',
     component: () => import('@/views/mailbox/MailboxPage.vue'),
@@ -126,6 +131,11 @@ const routes = [
     path: '/admin/ban-report',
     name: 'BanReport',
     component: () => import('@/views/admin/BanReportPage.vue'),
+  },
+  {
+    path: '/mail/board',
+    name: 'MailBoard',
+    component: () => import('@/views/mailbox/MailBoardPage.vue'),
   },
 ];
 

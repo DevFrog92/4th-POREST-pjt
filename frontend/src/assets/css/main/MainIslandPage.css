@@ -8,12 +8,44 @@
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
-    background-image: url('../../image/sky.jpg');
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+    
     position: relative;
     /* perspective: 800px; */
+    transition: all 1s;
   }
+/* .main__background {
+  position: absolute;
+  top: -44vh;
+  left: -50vw;
+  width: 200vw;
+  height: 290vh;
+  border-radius: 100%;
+  transition: all 2s
+}
+
+.day {
+  border-radius: 100% 100% 0 0;
+  width: 100%;
+  height: 145vh;
+  background-image: url('../../image/sky.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.night {
+  border-radius: 0 0 100% 100%;
+  width:100%;
+  height: 145vh;  
+  background-image: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);  
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  }
+
+.dayoff {
+  transform: rotateZ(180deg);
+} */
   
   .postbox {
     opacity: 0;
@@ -188,7 +220,7 @@
   .paper-plane,.paper-plane-2{
     opacity: 0;
     position: absolute;
-    top: -90%;
+    top: -70%;
     left: 25%;
     width: 2rem;
     height:2rem;
@@ -492,4 +524,33 @@
 
 .logo img {
   width: 10vw;
+}
+
+
+.question__btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  z-index: 90;
+  transform: perspective(800px) rotateZ(0);
+  transition: all 1s;
+}
+
+.question__btn img {
+  width: 100%;
+  height: 100%;
+}
+
+.question__btn:hover {
+  animation: rotate 1s ;
+}
+
+@keyframes rotate{
+  100%{
+    transform: perspective(800px) rotateZ(360deg);
+
+  }
 }

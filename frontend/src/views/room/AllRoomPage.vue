@@ -26,11 +26,7 @@
           <div class="room-card-back">
             <h1>상담소 열기</h1>
             <form @submit.prevent>
-              <input
-                type="text"
-                placeholder="상담소 이름을 적어주세요"
-                v-model="roomName"
-              />
+              <input type="text" placeholder="상담소 이름을 적어주세요" v-model="roomName" />
               <div class="capacity-wrapper">
                 <h2>참가 허용 인원</h2>
                 <div class="capacity-count">
@@ -48,10 +44,7 @@
               <h2>얼굴 공개 여부</h2>
               <div class="public-wrapper">
                 <div class="public public-btn" @click="public">공개</div>
-                <div
-                  class="non-public public-btn public-active"
-                  @click="nonpublic"
-                >
+                <div class="non-public public-btn public-active" @click="nonpublic">
                   비공개
                 </div>
               </div>
@@ -68,10 +61,7 @@
                 </div>
               </div>
               <div class="room-create-btn">
-                <div
-                  class="create-room-btn public-btn"
-                  @click.prevent="checkRoomName"
-                >
+                <div class="create-room-btn public-btn" @click.prevent="checkRoomName">
                   개설하기
                 </div>
                 <div class="exit-room-create public-btn">취소</div>
@@ -81,16 +71,10 @@
         </div>
         <div class="room-list">
           <div class="room-list-wrapper">
-            <div
-              class="room-item"
-              v-for="(room, index) in displayRooms"
-              :key="index"
-            >
+            <div class="room-item" v-for="(room, index) in displayRooms" :key="index">
               <div class="room-item-left">
                 <h1 class="room-name">{{ room.name }}</h1>
-                <p>
-                  얼굴 공개 여부 : {{ room.publicState ? '공개' : '비공개' }}
-                </p>
+                <p>얼굴 공개 여부 : {{ room.publicState ? "공개" : "비공개" }}</p>
                 <p>참가자 허용 인원 : {{ room.capacity }} 명</p>
                 <div class="room-category-flag-wrapper">
                   <span
@@ -102,18 +86,11 @@
                   >
                 </div>
                 <div class="room-btn">
-                  <span
-                    v-if="uid === room.hostID"
-                    @click="deleteRoom(room.id, index)"
-                    >삭제하기</span
-                  >
+                  <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">삭제하기</span>
                 </div>
               </div>
               <div class="room-item-right">
-                <div
-                  class="enter-room-btn"
-                  @click="moveToCheckIn(room.hostID, room.id, room.name)"
-                >
+                <div class="enter-room-btn" @click="moveToCheckIn(room.hostID, room.id, room.name)">
                   <span>입장</span><span>하기</span>
                 </div>
               </div>
@@ -169,27 +146,24 @@
       :roomName="roomName"
       @showApprove="showApprove"
     ></check-in-page>
-    <div
-      class="checkin-exit"
-      v-if="checkinState && !approveState"
-      @click="exitCheckin"
-    >
+    <div class="checkin-exit" v-if="checkinState && !approveState" @click="exitCheckin">
       떠나기
     </div>
   </div>
 </template>
 
 <script>
-import Star from '@/components/common/Star.vue';
-import CheckInPage from '@/views/room/CheckInPage.vue';
-import Approve from '@/views/room/Approve.vue';
-import { init } from '@/assets/js/AllRoomPage.js';
-import db from '@/db.js';
-import FireBase from 'firebase/app';
-import 'firebase/auth';
+import Star from "@/components/common/Star.vue";
+import CheckInPage from "@/views/room/CheckInPage.vue";
+import Approve from "@/views/room/Approve.vue";
+import { init } from "@/assets/js/AllRoomPage.js";
+import db from "@/db.js";
+import FireBase from "firebase/app";
+import "firebase/auth";
+import { verificationTemperature } from "@/api/auth";
 
 export default {
-  name: 'Allroompage',
+  name: "Allroompage",
   data() {
     return {
       roomName: null,
@@ -212,38 +186,20 @@ export default {
       selected: null,
       createRoomState: false,
       // tagColors: ['#F9957F', '#ABCFD1', '#D4E6C4', '#FFCFCB', '#ABBEEC', '#F4C464', '#F7D7C2', '#8CC1D3'],
-      tagColors: [
-        '#004e66',
-        '#EE7785',
-        '#fab1ce',
-        '#84B1ED',
-        '#ABBEEC',
-        '#F4C464',
-        '#bf209f',
-        '#8CC1D3',
-      ],
-      imgUrl: '@/assets/svg/tarot5.svg',
-      categories: [
-        '학교 생활',
-        '직장 생활',
-        '학업 및 진로',
-        '자녀 양육',
-        '대인 관계',
-        '심리 및 정서',
-        '연애',
-        '취업',
-      ],
+      tagColors: ["#004e66", "#EE7785", "#fab1ce", "#84B1ED", "#ABBEEC", "#F4C464", "#bf209f", "#8CC1D3"],
+      imgUrl: "@/assets/svg/tarot5.svg",
+      categories: ["학교 생활", "직장 생활", "학업 및 진로", "자녀 양육", "대인 관계", "심리 및 정서", "연애", "취업"],
       healingTexts: [
-        '  그대는 충분히 반짝거리기에, <br />그대가 주인공인 삶을 살아줬으면 한다.',
-        '잠들지 않아도 꿈꾸던 널,<br> 잊지 않기를 바란다.',
-        '같은 실수를 두려워하되, 새로운 실수를 <br>두려워하지 마라. 실수는 곧 경험이다.',
-        '자녀들에게는 어머니보다 더 훌륭한 <br> 하늘로부터 받은 선물은 없다.',
-        '당신은 달 같은 존재예요. <br> 세상에 하나뿐인, 사라져서는 안 될 <br> 소중한 존재',
-        '한 겨울에도 움트는 봄이 있는가 하면, <br> 밤의 장작 뒤에도 미소 짓는 새벽이 있다.',
-        '사랑을 이야기하면 사랑을 하게 된다.',
-        '준비와 기회가 조우할 때 일어나는 것, <br> 그것이 바로 행운이다.',
+        "  그대는 충분히 반짝거리기에, <br />그대가 주인공인 삶을 살아줬으면 한다.",
+        "잠들지 않아도 꿈꾸던 널,<br> 잊지 않기를 바란다.",
+        "같은 실수를 두려워하되, 새로운 실수를 <br>두려워하지 마라. 실수는 곧 경험이다.",
+        "자녀들에게는 어머니보다 더 훌륭한 <br> 하늘로부터 받은 선물은 없다.",
+        "당신은 달 같은 존재예요. <br> 세상에 하나뿐인, 사라져서는 안 될 <br> 소중한 존재",
+        "한 겨울에도 움트는 봄이 있는가 하면, <br> 밤의 장작 뒤에도 미소 짓는 새벽이 있다.",
+        "사랑을 이야기하면 사랑을 하게 된다.",
+        "준비와 기회가 조우할 때 일어나는 것, <br> 그것이 바로 행운이다.",
       ],
-      healingText: '',
+      healingText: "",
     };
   },
   components: {
@@ -251,15 +207,15 @@ export default {
     Approve,
     Star,
   },
-  props: ['user'],
+  props: ["user"],
   created() {
     let token = this.$store.getters.getAuthToken;
     if (this.temperature >= 60) {
       this.createRoomState = true;
     }
-    if (token == '' || token == null) {
-      alert('로그인이 필요합니다.');
-      this.$router.push({ name: 'Login' });
+    if (token == "" || token == null) {
+      alert("로그인이 필요합니다.");
+      this.$router.push({ name: "Login" });
     }
   },
   async mounted() {
@@ -280,7 +236,7 @@ export default {
     },
     select(index) {
       this.selected = index;
-      const headlingText = document.querySelector('.healing_text');
+      const headlingText = document.querySelector(".healing_text");
       headlingText.innerHTML = this.healingTexts[index];
       this.displayRooms = [];
       this.category_name = this.categories[index];
@@ -299,11 +255,11 @@ export default {
       this.approveState = false;
     },
     async checkRoomName() {
-      if (this.roomName == null || this.roomName == '') {
-        alert('방 이름은 필수 입력 사항입니다.');
+      if (this.roomName == null || this.roomName == "") {
+        alert("방 이름은 필수 입력 사항입니다.");
         return;
       }
-      await this.rooms.forEach(ele => {
+      await this.rooms.forEach((ele) => {
         if (ele.name == this.roomName) {
           this.roomNameCheck = true;
         }
@@ -312,17 +268,27 @@ export default {
         this.getCategory();
         // this.addRoom();
       } else {
-        this.roomName = '';
+        this.roomName = "";
       }
     },
     async getCategory() {
-      const roomCategory = document.querySelectorAll('.room-category');
-      await roomCategory.forEach(ele => {
-        if (ele.classList.contains('room-category-selected')) {
+      const roomCategory = document.querySelectorAll(".room-category");
+      await roomCategory.forEach((ele) => {
+        if (ele.classList.contains("room-category-selected")) {
           this.selectedCategory.push(ele.dataset.value - 1);
         }
       });
-      this.addRoom();
+      this.verificationTemperature();
+    },
+    async verificationTemperature() {
+      let res = await verificationTemperature({ temperature: this.$store.state.temperature });
+      if (res.status && !res.data.isSameTemp) {
+        alert(`데이터 맘대로 변경하지 말아주세요!😡`);
+      } else if (!res.status) {
+        alert("방을 생성할 수 없습니다.");
+      } else {
+        this.addRoom();
+      }
     },
     addRoom() {
       const now = new Date();
@@ -332,9 +298,9 @@ export default {
       const hour = now.getHours();
       const minute = now.getMinutes();
       const seconds = now.getSeconds();
-      const num = document.querySelector('.count-num');
+      const num = document.querySelector(".count-num");
       this.addState = true;
-      const docRef = db.collection('users').doc(this.user.uid);
+      const docRef = db.collection("users").doc(this.user.uid);
       // let roomData = {
       //   name: this.roomName,
       //   hostID: this.user.uid,
@@ -347,7 +313,7 @@ export default {
       // this.displayRooms.unshift(roomData);
       docRef.set({ name: this.user.uid });
       docRef
-        .collection('rooms')
+        .collection("rooms")
         .add({
           name: this.roomName,
           hostId: this.user.uid,
@@ -358,15 +324,15 @@ export default {
           createdAt: FireBase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
-          this.roomName = '';
+          this.roomName = "";
           this.selectedCategory = [];
           this.loadData();
         });
     },
     deleteRoom(roomId, index) {
-      db.collection('users')
+      db.collection("users")
         .doc(this.user.uid)
-        .collection('rooms')
+        .collection("rooms")
         .doc(roomId)
         .delete();
       this.displayRooms.splice(index, 1);
@@ -379,21 +345,21 @@ export default {
     moveToCheckIn(hostId, roomId, roomName) {
       this.checkinState = true;
       if (!this.uid) {
-        this.uid = 'none';
+        this.uid = "none";
       }
       this.hostId = hostId;
       this.roomId = roomId;
       this.roomName = roomName;
     },
     async loadData() {
-      const dbRef = db.collection('users');
-      await dbRef.get().then(async querySnapshot => {
-        await querySnapshot.forEach(async doc => {
+      const dbRef = db.collection("users");
+      await dbRef.get().then(async (querySnapshot) => {
+        await querySnapshot.forEach(async (doc) => {
           await dbRef
             .doc(doc.id)
-            .collection('rooms')
-            .onSnapshot(async snapShot => {
-              await snapShot.forEach(ele => {
+            .collection("rooms")
+            .onSnapshot(async (snapShot) => {
+              await snapShot.forEach((ele) => {
                 let dataForm = {
                   id: ele.id,
                   hostID: doc.id,
@@ -406,7 +372,7 @@ export default {
                 if (this.rooms.length != 0) {
                   let state = false;
                   for (let i = 0; i < this.rooms.length; i++) {
-                    if (this.rooms[i]['id'] === ele.id) {
+                    if (this.rooms[i]["id"] === ele.id) {
                       state = true;
                     }
                   }

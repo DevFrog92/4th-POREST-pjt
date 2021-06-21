@@ -5,7 +5,9 @@
     </span>
     <div class="envelope new">
       <div class="front">
-        <div class="stamp"></div>
+        <div class="stamp">
+          <img src="../../assets/image/gurumi.png" alt="" />
+        </div>
         <div class="mailme mail_reply_title">
           <p v-text="$store.state.selectedStory.detail.title"></p>
         </div>
@@ -15,8 +17,8 @@
         <div class="letter">
           <div class="root-mail">
             <!-- <p>{{ $store.state.selectedStory.detail.content }}</p> -->
-            <p v-text="$store.state.selectedStory.detail.content"></p>
-            <!-- <p v-html="$store.state.selectedStory.detail.content"></p> -->
+            <!-- <p v-text="$store.state.selectedStory.detail.content"></p> -->
+            <p v-html="$store.state.selectedStory.detail.content"></p>
           </div>
           <div class="btnReply">답장하기</div>
         </div>
@@ -30,7 +32,9 @@
 
     <div class="envelope open reply">
       <div class="front">
-        <div class="stamp"></div>
+        <div class="stamp">
+          <img src="../../assets/image/gurumi.png" alt="" />
+        </div>
         <div class="mailme">
           <p class="p_title">당신의 소중한 답장</p>
           <p class="p_subtitle">porest가 전해드립니다.</p>
@@ -81,11 +85,14 @@
         <div class="flap top-flap"></div>
       </div>
     </div>
+    <mouse class="mouse"></mouse>
   </div>
 </template>
 
 <script>
 import { init } from '@/assets/js/mail/RootMailReplyPage.js';
+import Mouse from '@/components/common/Mouse.vue';
+
 import { selectStory } from '@/api/stories';
 import { writeLetter } from '@/api/letters';
 export default {
@@ -116,6 +123,9 @@ export default {
         },
       },
     };
+  },
+  components: {
+    Mouse,
   },
   methods: {
     moveToBack() {

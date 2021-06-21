@@ -13,6 +13,7 @@ let currentSad=0;
 let audioChunks =[];
 
 // const video = document.querySelector('.myVideo')
+//2, 15, 17
 const arr = [0,0,0,0,0,0,0,0,0,0,0,0,2,3];
 const varEmotion = {
   angry: 0,
@@ -48,7 +49,6 @@ function sayHello(){
 }
 
 function saySpeek(){
-  console.log('start')
   mouth.style.animation = "mouth1 2.75s forwards"
 }
 
@@ -84,15 +84,12 @@ var getUserMedia =
     handlerFunction(stream);
   })
 
-
-
 // recording
 function handlerFunction(stream) {
   rec = new MediaRecorder(stream);
   rec.ondataavailable = e => {
     audioChunks.push(e.data);
     if (rec.state == "inactive"){
-      console.log(audioChunks)
       let blob = new Blob(audioChunks,{type:'audio/mp3'});
       recordedAudio.src = URL.createObjectURL(blob);
       recordedAudio.controls=true;
@@ -104,7 +101,6 @@ function handlerFunction(stream) {
 const record = document.querySelector('#record');
 const stopRecord = document.querySelector('#stopRecord');
 record.addEventListener('click',(e)=>{
-  console.log('recording start');
   record.disabled = true;
   record.style.backgroundColor = 'blue';
   stopRecord.disabled = false;
@@ -112,7 +108,6 @@ record.addEventListener('click',(e)=>{
   rec.start();
 })
 stopRecord.addEventListener('click',(e)=>{
-  console.log('recording stop');
   record.disabled = false;
   record.style.backgroundColor = 'red';
   stopRecord.disabled = true;
@@ -139,7 +134,6 @@ function addVideoStream(video, stream) {
         width: video.clientWidth,
         height: video.clientHeight,
       };
-      // console.log(displaySize, video.clientWidth);
       faceapi.matchDimensions(canvas, displaySize);
       setInterval(async () => {
         const detections = await faceapi
@@ -157,23 +151,144 @@ function addVideoStream(video, stream) {
           });
           varEmotion[emotion[0]] += 1;
         }
-        // console.log(varEmotion);
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
         faceapi.draw.drawDetections(canvas, resizedDetections);
         faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
         faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-        // console.log(varEmotion);
       }, 100);
   })
 }    
 }
 
-
-
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new window.SpeechRecognition();
 recognition.interimResults = true;
+
+///////////
+
+const processEmotion = (emotion) => {
+  if(emotion === 'greetings' && answer == 0){
+    defaultFace()
+    answer++;
+    setTimeout(()=>{
+      sayLongSpeek();
+      audioPlay(12)
+    },200)
+  }else if((emotion === 'Sadness' || emotion === 'Angry') && answer === 1){
+    defaultFace()
+    storyContent = 'sad';
+    answer++;
+    setTimeout(()=>{
+      sayHello();
+      audioPlay(13)
+    },200)
+  }else if(emotion === 'Sadness' || emotion === 'Angry' || emotion === 'Fear'){
+    let temp = [1, 2, 10, 15, 17, 25];
+    defaultFace();
+    setTimeout(()=>{
+      sayHello();
+      audioPlay(temp[Math.floor(Math.random()*6)]);
+    },2000)
+  }else if(emotion === 'troubles' && answer > 1){
+    defaultFace()
+    setTimeout(()=>{
+      saySpeek();
+      audioPlay(21)
+    },300)
+  }else if(emotion === 'farewells' && answer > 1){
+    const varEmotion_current = varEmotion['happy'];
+    let now;
+    defaultFace()
+    setTimeout(()=>{
+      saySpeek();
+      audioPlay(3)
+    },200)
+    setTimeout(()=>{
+      defaultFace()
+      setTimeout(()=>{
+        saySpeek();
+        audioPlay(4)        
+      },200)
+    },3200)
+    setTimeout(()=>{
+      defaultFace()
+      setTimeout(()=>{
+        sayHello();
+        audioPlay(5);
+      },200)
+      setTimeout(()=>{
+        now =varEmotion['happy'];
+        if(now - varEmotion_current >= 2){
+          defaultFace()
+          setTimeout(()=>{
+            saySpeek();
+            btn.click();
+            audioPlay(6);
+          },200)
+          setTimeout(()=>{
+            defaultFace()
+            setTimeout(()=>{
+              saySpeek();
+              audioPlay(7);
+            },200)
+          },2500);
+          setTimeout(()=>{
+            defaultFace()
+            setTimeout(()=>{
+              saySpeek();
+              audioPlay(8);
+            },200)
+          },6500);
+          setTimeout(()=>{
+            defaultFace()
+            setTimeout(()=>{
+              sayHello();
+              audioPlay(22);
+              setTimeout(()=>{
+                window.open('', '_self', '');
+                window.close();
+              },2500)
+            },200)
+          },10000);
+        }else {
+          defaultFace()
+          setTimeout(()=>{
+            saySpeek();
+            audioPlay(23);
+          },200)
+          setTimeout(()=>{
+            defaultFace()
+            setTimeout(()=>{
+              saySpeek();
+              audioPlay(24);
+            },200)
+          },2500)
+          setTimeout(()=>{
+            defaultFace()
+            setTimeout(()=>{
+              sayHello();
+              audioPlay(22);
+              setTimeout(()=>{
+                window.open('', '_self', '');
+                window.close();
+              },2500)
+            },200)
+          },5500)
+        }
+      },2500)
+    },7700);
+  }else if(emotion === 'Neutral' && answer > 1){
+    defaultFace()
+    answer++;
+    setTimeout(()=>{
+      sayHello();
+      audioPlay(26)
+    },200)
+  }
+}
+
+///////////
 
 recognition.addEventListener('result',(e)=>{
 
@@ -182,177 +297,36 @@ recognition.addEventListener('result',(e)=>{
   .map(result => result[0])
   .map(result => result.transcript)
   .join('');
-  // textSection.appendChild(p)
+
   if(e.results[0].isFinal){
-    console.log(text)
-    if(text.includes('안녕')|| text.includes('반가워')  && answer === 0){
-      currentSad = varEmotion['sad'];
-      defaultFace()
-      answer++;
-      setTimeout(()=>{
-        sayLongSpeek();
-        audioPlay(12)
-      },200)
+    const url = 'https://live.porest.kr/ml/emotions'
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('post', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({'text': text}));
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === xhr.DONE){
+        if(xhr.status == 200){
+          const res = xhr.response;
+          const data = JSON.parse(xhr.response)
+          console.log(text, data)
+          processEmotion(data.emotion);
+        }
+      }
     }
 
-    if(text.includes('아니')|| text.includes('별로') || text.includes('행복하지 않았어') && answer === 1){
-      defaultFace()
-      storyContent = 'sad';
-      answer++;
-      setTimeout(()=>{
-        sayHello();
-        audioPlay(13)
-      },200)
-    }
-    
-    if(text.includes('응')|| text.includes('행복했어') || text.includes('재밌었어') && answer === 1){
-      defaultFace()
-      storyContent = 'happy';
-      answer++;
-      setTimeout(()=>{
-        saySpeek();
-        audioPlay(14)
-      },300)
-    }
-
-    if(text.includes('재밌었') || text.includes('신났어') ||text.includes('즐거웠어') || text.includes('즐겁다')){
-      defaultFace()
-      let happy = [9,16]
-      setTimeout(()=>{
-        sayHello();
-        audioPlay(happy[Math.round(Math.random())])
-      },300)
-    }
-    if(text.includes('혼났어') || text.includes('화냈어') || text.includes('맞았어') || text.includes('기분 나빴어')){
-      defaultFace()
-      setTimeout(()=>{
-        sayHello();
-        audioPlay(10)
-      },300)
-    }
-    if(text.includes('내 말을 안 들어줘') || text.includes('들어 줄 사람이 없어') || text.includes('들어줄 사람이 없어') || text.includes('이야기할 사람이 없어')){
-      defaultFace()
-      setTimeout(()=>{
-        saySpeek();
-        audioPlay(21)
-      },300)
-    }
-
-    console.log(varEmotion['happy'])
-
-    if(text.includes('다음에 또 올게') || text.includes('갈게') ){
-      console.log(varEmotion['happy'])
-      const varEmotion_current = varEmotion['happy'];
-      let now;
-      defaultFace()
-      setTimeout(()=>{
-        saySpeek();
-        audioPlay(3)
-      },200)
-      setTimeout(()=>{
-        defaultFace()
-        setTimeout(()=>{
-          saySpeek();
-          audioPlay(4)        
-        },200)
-      },3200)
-      setTimeout(()=>{
-        console.log('시작한다. 카운트')
-        defaultFace()
-        setTimeout(()=>{
-          sayHello();
-          audioPlay(5);
-        },200)
-        console.log('now',now,varEmotion_current)
-        setTimeout(()=>{
-          now =varEmotion['happy'];
-          if(now - varEmotion_current >= 2){
-            console.log('고마워',now,varEmotion)
-            defaultFace()
-            setTimeout(()=>{
-              saySpeek();
-              btn.click();
-              audioPlay(6);
-            },200)
-            setTimeout(()=>{
-              defaultFace()
-              setTimeout(()=>{
-                saySpeek();
-                audioPlay(7);
-              },200)
-            },2500);
-            setTimeout(()=>{
-              defaultFace()
-              setTimeout(()=>{
-                saySpeek();
-                audioPlay(8);
-              },200)
-            },6500);
-            setTimeout(()=>{
-              defaultFace()
-              setTimeout(()=>{
-                sayHello();
-                audioPlay(22);
-                setTimeout(()=>{
-                  window.open('', '_self', '');
-                  window.close();
-                },2500)
-              },200)
-            },10000);
-          }else {
-            defaultFace()
-            setTimeout(()=>{
-              saySpeek();
-              audioPlay(23);
-            },200)
-            setTimeout(()=>{
-              defaultFace()
-              setTimeout(()=>{
-                saySpeek();
-                audioPlay(24);
-              },200)
-            },2500)
-            setTimeout(()=>{
-              defaultFace()
-              setTimeout(()=>{
-                sayHello();
-                audioPlay(22);
-                setTimeout(()=>{
-                  window.open('', '_self', '');
-                  window.close();
-                },2500)
-              },200)
-            },5500)
-          }
-        },2500)
-      },7700);
-    }
-
-    if(text.includes('힘들')){
-      let hard = [2,15];
-      sayHello();
-      console.log(Math.round(Math.random()))
-      audioPlay(hard[Math.round(Math.random())]);
-      setTimeout(()=>{
-        defaultFace()
-      },2500)
-    }
-    if(text.includes('속상')){
-      let bad = [1,15];
-      sayHello();
-      console.log(Math.round(Math.random()))
-      audioPlay(bad[Math.round(Math.random())]);
-      setTimeout(()=>{
-        defaultFace()
-      },2500)
-    }
+    // axios.post('http://localhost:8082/emotions', {'text':text})
+    // .then((res) => {
+    //   const em = res.data.emotion
+    //   console(res.data)
+    //   processEmotion(em)
+    // })
   }
 })
 
 recognition.addEventListener('end',()=>{
-  console.log('end')
-  console.log('sadState',sadState)
-  if(sadState >= 20){
+  if(sadState >= 60){
     sadState = 0;
     varEmotion['sad'] = 0;
     defaultFace()
@@ -365,7 +339,6 @@ recognition.addEventListener('end',()=>{
   const randomNumber = arr[Math.floor(Math.random()*arr.length)]
   // console.log(Math.random() * 10)
   // if(randomNumber != 0){
-  //   console.log('실행할거야')
   //   const audio = new Audio(`/audio/sound${randomNumber}.mp3`);
   //   audio.loop = false; // 반복재생하지 않음
   //   audio.volume = 0.5; // 음량 설정

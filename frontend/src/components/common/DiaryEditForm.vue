@@ -24,6 +24,7 @@
     <div class="sticker-container">
       <select-stickers></select-stickers>
     </div>
+
     <p class="title">오늘의 일기</p>
     <div class="diary-square">
       <div class="writing-container">
@@ -38,6 +39,11 @@
         :deleteDiary="deleteDiary"
       ></slot>
     </p>
+    <div class="attribute_flatticon">
+      Icons made by
+      <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+      <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+    </div>
   </div>
 </template>
 
@@ -100,7 +106,7 @@ export default {
     async createDiary() {
       if (this.checkForm) {
         try {
-          this.conversion();
+          // this.conversion();
           await createEmotion({
             content: this.content,
             feeling: this.$store.state.emotionIndex,
@@ -112,7 +118,7 @@ export default {
             imageUrl: this.$store.state.selectedSticker,
           });
           this.loadDiaryCalendar();
-          alert('생성이 완료됐습니다.');
+          // alert('생성이 완료됐습니다.');
           this.$store.commit('getModalStatus', false);
         } catch (error) {
           console.log(error);
@@ -122,7 +128,6 @@ export default {
       }
     },
     async updateDiary() {
-      // this.checkUpdateForm();
       if (this.checkForm) {
         try {
           const id = this.$store.state.targetDateId;
@@ -133,26 +138,15 @@ export default {
           });
           this.loadDiaryDetail(this.$store.state.targetDateId);
           this.loadDiaryCalendar();
-          alert('수정이 완료되었습니다.');
+          // alert('수정이 완료되었습니다.');
           this.$store.commit('getModalStatus', false);
           this.$store.commit('getCalendarRefreshStatus', true);
+          // this.$store.commit('getCheckModalStatus', true);
         } catch (error) {
           console.log(error);
         }
       } else {
         alert('모든 항목을 입력해주세요');
-      }
-    },
-    checkUpdateForm() {
-      if (this.$store.state.emotionIndex === 0) {
-        this.feeling = this.$store.getters.getUpdateFeeling;
-      } else {
-        this.feeling = this.$store.state.targetDateDetail['feeling'];
-      }
-      if (this.$store.state.selectedSticker === '') {
-        this.imageUrl = this.$store.getters.getUpdateEmotion;
-      } else {
-        this.imageUrl = this.$store.state.targetDateDetail['imageUrl'];
       }
     },
     async deleteDiary() {
@@ -164,7 +158,7 @@ export default {
         this.$store.commit('getSelectedSticker', '');
         this.$store.commit('getEmotionIndex', 0);
         this.$store.commit('getStickerIndex', 0);
-        alert('삭제가 완료되었습니다.');
+        // alert('삭제가 완료되었습니다.');
         this.$store.commit('getModalStatus', false);
       } catch (error) {
         console.log(error);
@@ -284,6 +278,7 @@ export default {
 }
 
 .writing-container textarea {
+  white-space: pre-wrap;
   background: #fffcf5;
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
   border: none;
@@ -347,5 +342,24 @@ export default {
   float: right;
   margin-top: 2vh;
   cursor: pointer;
+}
+.attribute_flatticon {
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1px;
+}
+
+.attribute_flatticon a {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+.attribute_flatticon a:visited {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  z-index: 3;
 }
 </style>

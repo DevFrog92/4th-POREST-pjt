@@ -43,15 +43,23 @@
         </div>
       </div>
     </section>
+    <div>
+      <snackbar :infinity="infinity" :position="position">
+        {{ snackbarText }}
+        <button class="close-btn" @click="$store.state.snackbarStatus = false">close</button>
+      </snackbar>
+    </div>
   </div>
 </template>
 
 <script>
 import { findPassword } from "@/api/auth";
 import AuthForm from "@/components/auth/AuthForm";
+import Snackbar from "@/components/common/Snackbar";
 export default {
   components: {
     AuthForm,
+    Snackbar,
   },
   data() {
     return {
@@ -59,6 +67,10 @@ export default {
         email: "",
         nickname: "",
       },
+      //snackbar
+      position: "top-center",
+      infinity: false,
+      snackbarText: "",
     };
   },
   methods: {
@@ -67,6 +79,13 @@ export default {
     },
     async submitForm() {
       let res = await findPassword(this.userData);
+      if (res.status) {
+        this.$store.dispatch("saveSnackbarStatus", true);
+        this.snackbarText = "이메일을 확인하세요";
+      } else {
+        this.$store.dispatch("saveSnackbarStatus", true);
+        this.snackbarText = res.message;
+      }
     },
   },
 };

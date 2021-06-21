@@ -12,12 +12,16 @@ import java.util.List;
 @ToString
 public class DetailCounselDto {
     private Long counselId;
+    private String writerNickname;
     private String counsellorNickname;
     private List<LetterReplyDto> detail;
+    private boolean hasAuth;
 
-    public DetailCounselDto(Long counselId, String nickname){
+    public DetailCounselDto(Long counselId,String writerNickname, String counsellorNickname, boolean hasAuth){
         detail = new ArrayList<>();
         this.counselId = counselId;
-        this.counsellorNickname = nickname;
+        this.writerNickname = writerNickname;
+        this.counsellorNickname = counsellorNickname;
+        this.hasAuth = hasAuth;
     }
 }

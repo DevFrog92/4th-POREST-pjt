@@ -6,9 +6,10 @@
   height: 100vh;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   overflow: hidden;
   font-family: 'InfinitySans-BoldA1';
+  position: relative;
 
 }
 .amongus {
@@ -36,7 +37,6 @@
   height: 100%;
   border: 3px solid antiquewhite;
   border-style: groove;
-
 }
 #content {
   width: 100vw;
@@ -140,5 +140,3 @@ form {
   margin-right: 1rem;
 }
 
-.color-code {
-}

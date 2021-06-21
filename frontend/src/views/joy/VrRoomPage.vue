@@ -1,5 +1,38 @@
 <template>
   <div class="vr__wrapper">
+    <div class="about__modal" v-if="vrState">
+      <div class="modal__wrapper">
+        <h1 class="modal__header">
+          나만 없어 VR <img src="../../assets/image/sticker/37.png" alt="" />
+        </h1>
+        <div class="modal__content">
+          만약 VR 기기가 없다면 저희 서비스에 기부를 통해서 구입할 수 있습니다.
+          기부하신 금액은 서비스 발전 및 경제적인 부담으로 치료를 받지 못하시는
+          분들에게 사용됩니다
+        </div>
+        <div class="modal__img">
+          <img src="../../assets/image/vrkit.png" alt="" />
+        </div>
+        <div class="modal__footer">
+          <div class="go__to__about" @click="moveToDetail">
+            기부하기
+            <img
+              class="donation"
+              src="../../assets/image/sticker/5.png"
+              alt=""
+            />
+          </div>
+          <div class="go__to__exit" @click="exitModal">나가기</div>
+        </div>
+        <div class="attribute_flatticon">
+          Icons made by
+          <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+          <a href="https://www.flaticon.com/" title="Flaticon"
+            >www.flaticon.com</a
+          >
+        </div>
+      </div>
+    </div>
     <div class="before">
       <i class="fas fa-arrow-left" @click="moveToBack"></i>
     </div>
@@ -48,6 +81,12 @@
         </div>
       </div>
     </section>
+    <div class="video__btn" @click="videoPlay">🎞</div>
+    <div class="video__popup__vr" v-show="vrVideoState">
+      <div class="video__vr__wrapper">
+        <video class="VR__video" src="../../assets/music/vr.mp4"></video>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -95,8 +134,11 @@ export default {
         ['#4facfe', '#66a6ff'],
         ['#e0c3fc', '#8ec5fc'],
       ],
+      vrState: true,
+      vrVideoState: false,
     };
   },
+  mounted() {},
   created() {
     let token = this.$store.getters.getAuthToken;
     if (token == '' || token == null) {
@@ -105,6 +147,17 @@ export default {
     }
   },
   methods: {
+    videoPlay() {
+      const videoControl = document.querySelector('.VR__video');
+      videoControl.play();
+      this.vrVideoState = !this.vrVideoState;
+    },
+    moveToDetail() {
+      this.$router.push({ name: 'About' });
+    },
+    exitModal() {
+      this.vrState = false;
+    },
     moveToBack() {
       this.$router.go(-1);
     },

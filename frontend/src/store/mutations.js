@@ -58,6 +58,9 @@ export default {
   getThisMonthEmoji(state, thisMonthWithEmoji) {
     state.thisMonthWithEmoji = thisMonthWithEmoji;
   },
+  getCheckModalStatus(state, checkModalStatus) {
+    state.checkModalStatus = checkModalStatus;
+  },
 
   //Mail 관련
   setCounselId(state, counselId) {
@@ -68,6 +71,14 @@ export default {
   },
   setAllLetters(state, allLetters) {
     state.allLetters = allLetters;
+  },
+
+  // mail-board
+  getBoardModalStatus(state, openBoardModal) {
+    state.openBoardModal = openBoardModal;
+  },
+  getPageNumbers(state, pageNumbers) {
+    state.pageNumbers = pageNumbers;
   },
 
   // 프로필
